@@ -1,0 +1,402 @@
+\documentclass{egpubl}
+
+% --- for  Annual CONFERENCE
+% \ConferenceSubmission % uncomment for Conference submission
+% \ConferencePaper      % uncomment for (final) Conference Paper
+% \STAR                 % uncomment for STAR contribution
+% \Tutorial             % uncomment for Tutorial contribution
+% \ShortPresentation    % uncomment for (final) Short Conference Presentation
+%
+% --- for  CGF Journal
+ \JournalSubmission    % uncomment for submission to Computer Graphics Forum
+% \JournalPaper         % uncomment for final version of Journal Paper
+%
+% --- for  CGF Journal: special issue
+% \SpecialIssueSubmission    % uncomment for submission to Computer Graphics Forum, special issue
+% \SpecialIssuePaper         % uncomment for final version of Journal Paper, special issue
+%
+% --- for  EG Workshop Proceedings
+% \WsSubmission    % uncomment for submission to EG Workshop
+ %\WsPaper         % uncomment for final version of EG Workshop contribution
+%
+ \electronicVersion % can be used both for the printed and electronic version
+
+% !! *please* don't change anything above
+% !! unless you REALLY know what you are doing
+% ------------------------------------------------------------------------
+
+% for including postscript figures
+% mind: package option 'draft' will replace PS figure by a filname within a frame
+\ifpdf \usepackage[pdftex]{graphicx} \pdfcompresslevel=9
+\else \usepackage[dvips]{graphicx} \fi
+
+\PrintedOrElectronic
+
+% prepare for electronic version of your document
+\usepackage{t1enc,dfadobe}
+\usepackage{url}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage[usenames,dvipsnames,svgnames]{xcolor}
+\usepackage{subfigure}
+\usepackage{flushend}
+\usepackage[compact]{titlesec}
+\usepackage[normalem]{ulem}
+
+\usepackage{egweblnk}
+\usepackage{cite}
+
+%\usepackage[bookmarks,backref=true,linkcolor=black]{hyperref} %,colorlinks
+%\hypersetup{
+%  pdfauthor = {},
+%  pdftitle = {},
+%  pdfsubject = {},
+%  pdfkeywords = {},
+%  colorlinks=true,
+%  linkcolor= black,
+%  citecolor= black,
+%  pageanchor=true,
+%  urlcolor = black,
+%  plainpages = false,
+%  linktocpage
+%}
+
+% For backwards compatibility to old LaTeX type font selection.
+% Uncomment if your document adheres to LaTeX2e recommendations.
+\let\rm=\rmfamily    \let\sf=\sffamily    \let\tt=\ttfamily
+\let\it=\itshape     \let\sl=\slshape     \let\sc=\scshape
+\let\bf=\bfseries
+
+\def\etal{\textit{et al.}}
+\definecolor{MyGreen}{rgb}{0,0.7,0}
+\definecolor{MyWhite}{rgb}{1,1,1}
+\definecolor{MyGray}{rgb}{0.5,0.5,0.5}
+\definecolor{LightGray}{rgb}{0.7,0.7,0.7}
+\definecolor{DarkGray}{rgb}{0.3,0.3,0.3}
+\definecolor{DarkYellow}{rgb}{0.7,0.7,0.0}
+\definecolor{MyNavyBlue}{rgb}{0.2,0.3,0.7}
+\definecolor{darkgreen}{rgb}{0,0.55,0}
+\newcommand{\black}[1]{{\color{Black} #1}}
+\newcommand{\white}[1]{{\color{MyWhite} #1}}
+\newcommand{\gray}[1]{{\color{MyGray} #1}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\green}[1]{{\color{MyGreen} #1}}
+\newcommand{\blue}[1]{{\color{MyNavyBlue} #1}}
+\newcommand{\yellow}[1]{{\color{DarkYellow} #1}}
+\newcommand{\maybe}[1]{\yellow{#1}}
+\newcommand{\rout}[1]{\red{\sout{#1}}}
+\newcommand{\repl}[2]{\rout{#1} \green{#2}}
+\newcommand{\fix}[1]{\red{\emph{(#1)}}}
+\newcommand{\Fix}[1]{\begin{itemize} \renewcommand\labelitemi{\red{--}} \item \red{#1} 
+\end{itemize}}
+
+\newcommand{\todo}[1] {\textbf{[~}\textcolor {red}{#1}\marginpar{\textcolor {red}{\centerline{{\Huge \textbf{!}}}}}\textbf{~]}}
+\newcommand{\question}[1] {\textbf{[~}\textcolor {darkgreen}{#1}\marginpar{\textcolor {darkgreen}{\centerline{{\Huge \textbf{!}}}}}\textbf{~]}}
+\newcommand{\diff}[1]{[\textcolor{blue}{#1}\marginpar{\textcolor{blue}{\centerline{{\Huge \textbf{!}}}}}]}
+
+\def\IC{IC}
+\def\SAR{SAR}
+\def\USAR{USAR}
+
+\setlength\fboxsep{0pt}
+
+% end of prologue
+
+\title[Urban Search \& Rescue Mission Planning]{Supporting Urban Search \& Rescue Mission Planning\\ through Visualization-Based Analysis}
+
+%\author{paper1006}
+\author[Bock \etal]{
+    Alexander Bock$^1$, Alexander Kleiner$^2$, Jonas Lundberg$^3$, and Timo Ropinski$^1$\\%
+    $^1$ Scientific Visualization Group, Link\"oping University\\%
+    $^2$ iRobot, Pasadena, CA\\%
+    {\small $^3$ Graphic Design Group, Link\"oping University}
+}   
+
+%% Uncomment below to disable the manuscript note
+%\renewcommand{\manuscriptnotetxt}{}
+
+%% Copyright space is enabled by default as required by guidelines.
+%% It is disabled by the 'review' option or via the following command:
+% \nocopyrightspace
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% New teaser images
+\teaser{
+	\centering
+	\subfigure[Voxelized 3D point cloud rendering that enables an increased awareness of an office building.]{
+		\fbox{\includegraphics[height=0.2375\linewidth]{figures/image1.jpg}}\label{fig:teaser:1}
+	}
+	\hfill
+	\subfigure[Viable paths through buildings of the Tohoku university with two hazardous environments.]{
+		\fbox{\includegraphics[height=0.2375\linewidth]{figures/image2.jpg}}\label{fig:teaser:2}
+	}
+	\hfill
+	\subfigure[Top-down view of the area providing contextual information.]{
+		\fbox{\includegraphics[height=0.2375\linewidth]{figures/image2-overview.jpg}}\label{fig:teaser:3}
+	}
+	\hfill
+	\subfigure[Path analysis using parallel coordinates plots and profile plots.]{
+		\fbox{\includegraphics[height=0.2375\linewidth]{figures/pcpprofile.png}}\label{fig:teaser:4}
+	}
+  \caption{Our proposed visualization system applied to a collapsed building at Tohoku university. Different views (a--c) present the operator with an understanding of the building, allowing him to select and inspect paths that reach a point of interest. The assessment of the trade-off between paths is supported by a set of interactive visual analysis tools (d).}
+  \label{fig:teaser}
+}
+
+\maketitle
+
+\begin{abstract}
+We propose a visualization system for incident commanders in urban search~\&~rescue scenarios that supports access path planning for post-disaster structures. Utilizing point cloud data acquired from unmanned robots, we provide methods for assessment of automatically generated paths. As data uncertainty and a priori unknown information make fully automated systems impractical, we present a set of viable access paths, based on varying risk factors, in a 3D environment combined with the visual analysis tools enabling informed decisions and trade-offs. Based on these decisions, a responder is guided along the path by the incident commander, who can interactively annotate and reevaluate the acquired point cloud to react to the dynamics of the situation. We describe design considerations for our system, technical realizations, and discuss the results of an expert evaluation.
+
+\begin{classification}
+   \CCScat{I.3.7}{Computer Graphics}{Three-Dimensional Graphics and Realism}{Color, shading, shadowing, and texture}
+\end{classification}
+
+
+\end{abstract}
+
+\section{Introduction}
+
+Structural damage to inhabited buildings is an ever-present danger. As time-to-rescue is an important factors for victims' survivability, it is of highest importance for rescue responders to reach victims and provide medical attention or extraction. Planning and executing paths through buildings, however, is difficult as available floor plans are outdated. Furthermore, structural weaknesses as well as hazardous environments, make regions and areas inaccessible. While trained responders can use their knowledge and intuition to spot these hazards, it is paramount that the \emph{Incident Commander} (IC) can analyze the information and coordinate rescue responders. There exist well-defined protocols describing the actions taken during an \emph{Urban Search~\&~Rescue} (USAR) operation. In most protocols, one \IC\ is responsible for a single building and instructs multiple rescue responders inside. The Federal Emergency Management Agency describes steps that are performed by the rescue team. During the assessment step, 2D maps of the collapsed building are drawn based on the descriptions of rescue responders moving about the building searching for victims. In this exploration phase, they might stumble into hazardous areas that endanger the rescuer's life.
+
+In recent years, technological developments made it possible to use unmanned vehicles to perform the initial exploration. The robots are deployed and are equipped with sensors that can detect victims, gather information about potentially hazardous environments, and perform detailed scans of the interior. After the map has been acquired, the \IC\ can analyze the collected data and plan access paths that reach certain \emph{Points of Interest} (POIs). In most cases, these POIs are potential locations of victims, but they can also be other mission critical areas.
+
+In this paper, we propose a visualization system that creates an interactive 3D rendering tailored to increase the \IC 's awareness of internal structures (see Figure~\ref{fig:teaser}~(a-c)) and supports the planning and analysis of access paths (see Figure~\ref{fig:teaser}~(d)). Our system computes an ensemble of access paths from the entry point to the POIs, where each path is based on varying weighting factors. Uncertainty in the data and a priori unknown information make it infeasible to employ automatic algorithms to detect the globally optimal path. Our system supports the \IC\ in the process of analyzing and comparing all available paths at once to minimize the rescuer's danger and travel time. We describe system requirements, design considerations, technical realizations, and we discuss how experts perform in reading the visualizations, how they rate their own understanding, and what preferences they have for the visualizations.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Related Work} \label{sec:relatedwork}
+\noindent {\bfseries Emergency management.} Much of the visualization-oriented work  in the field of emergency management deals with evacuation planning. Notable work was performed by Reddy~\etal, which enables analyzing possible bottlenecks of escape routes~\cite{EuroVA12:13-17:2012}. Ribarsky~\etal\ presented a system organizing first responders in intact structures~\cite{Ribarsky:2010}. Kim~\etal\ developed a system enhancing the situational awareness of responders using a mobile visual analytics tool~\cite{Kim:2008}. Many existing planning systems deployed nowadays in USAR scenarios are based on 2D representations~\cite{kleiner_et_al_ssrr09,KohlbrecherMeyerStrykKlingaufFlexibleSlamSystem2011}. Given the 2D map of the environment, one common approach to path planning is to plan the shortest trajectory and to follow this trajectory stepwise. Wirth~\etal\ introduced an exploration strategy and path planner that utilizes occupancy grid maps when planning to reach several targets at the same time~\cite{Wirth2007ETA1}.
+
+\noindent {\bfseries Point cloud visualization.} Basic rendering capabilities for point cloud data are provided by the widely used Point Cloud Library~\cite{Rusu11ICRA}. Furthermore, work by Richter~\etal\ uses a level-of-detail structure to render massive point clouds at high frame rates~\cite{Richter:2010:ORV:1811158.1811178}. More recently, Pintus~\etal\ presented a rendering algorithm that enhances features of unstructured point clouds without preprocessing~\cite{Pintus:2011:RRM:2384495.2384513}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Decision-Making Theory} \label{sec:theory}
+It is crucial to take knowledge about human decision making into account to design a decision support system. Andrienko and Andrienki showed that the usage of explorative interactive tools support the decision process~\cite{Andrienko:2003kv}. Decision makers tend to evaluate options serially in time-constrained situations; they attempt to find one viable plan rather than attempting to generate and compare numerous plans in parallel. This theory has been described by Klein and Calderwood as \emph{Recognition Primed Decision-making} (RPD)~\cite{KleinCalderwood}. Initially, experts look for similarities to previous situations with regard to relevant goals, things that were important to monitor, and possible actions. Then, they go through a process of mental simulation to consider whether the actions are applicable to the case at hand. They assess the ongoing situation, looking for violations and confirmations of expectancies, which may require reframing the situation. Klein and Calderwood suggest that ``displays and interfaces should be centered on decisions rather than around data flows''~\cite{KleinCalderwood}, emphasizing that systems can be built to enhance the workflow of mental simulation. 
+
+The \emph{Contextual Control Model} (COCOM) by Hollnagel and Woods describes how people rely on context when making decisions~\cite{hollnagel2005joint}. Humans sometimes act with plans of lower quality, relying on the environment to make decisions opportunistically. The quality of their control can be described as scrambled, opportunistic, tactical, or strategic. The scrambled mode refers to decisions made without any information. In the opportunistic mode, people rely on cues in the local context to decide on their next action. In tactical mode, they have an idea how to achieve their goal before taking action---a plan. In strategic mode, the plan includes coordination with other simultaneous goals. Our goal is to raise the quality of control from being opportunistic (as in the current workflow) to being strategic, thus enabling improved decision-making capabilities.
+
+The \emph{Extended Control Model} (ECOM) describes plans in terms of a tactical level (setting goals), monitoring (making plans and overseeing plans), regulating (managing local resources), and tracking (performing and adjusting actions)~\cite{hollnagel2005joint}. This theory can be used to apprise what kind of planning support a system provides.  Moreover, it has been argued by Lundberg~\etal\ that it is important to support resiliency: ``Rather than merely selecting a response from a ready-made table, [the system] must adapt and create a suitable response; either by following ready-made plans for adaptation or by making sense of the situation and create responses during the unfolding event''~\cite{Lundberg2012}. Thus, in addition to supporting foreseeable responses, the system should also support working outside of prepared situations.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Incident Commander Workflow} \label{sec:workflow}
+
+\begin{figure}
+	\centering
+	\includegraphics[height=0.85\columnwidth]{figures/workflow.pdf}
+	\caption{A schematic timeline overview of the currently employed workflow and our proposed system, showing events (red) and actions (blue) split up into five distinct phases. Utilizing the additional actions (yellow) in parallel enables faster exploration and decreased overall time-to-rescue.}
+	\label{fig:workflow:workflow}
+\end{figure}
+
+In this section, we will describe the current workflow first (see Figure~\ref{fig:workflow:workflow}, left) and then propose a visualization-enhanced workflow supported by our system (see Figure~\ref{fig:workflow:workflow}, right). Roman numerals in the text refer to the corresponding phases in the figure.
+
+\noindent {\bfseries Current workflow.} The first step for the responders is to explore and secure the area outside the collapsed building (Phase \texttt{I}). No rescuer is allowed to enter the building before it is secured, which can take an hour or more to finish (Phase \texttt{II}). Then, the \IC\ determines entry points and directs rescuers to perform reconnaissance (Phase \texttt{III}). The rescuer inside the building slowly advances and reports his progress to the \IC, who draws a 2D map (Phase \texttt{IV}). This exposes the rescuer to unknown risks, like gas leaks or dormant fires. This is a good example of opportunistic control, where decisions are made opportunistically based on feedback from the environment. Although responders may recognize situations, decisions regarding the path are limited to the extent of the exploration and their view of the local environment. Global planning is limited further by the ability of responders to communicate relevant structural information accurately to the \IC, such as angles of turns, which cause hand-drawn maps to experience drift.
+
+\noindent {\bfseries Visualization-enhanced workflow.} While the responders secure the building, the most time-consuming of the initial tasks, unmanned robots are released into the structure and measure the inside of the structure~(parallel execution in phase \texttt{II}). The robots' sensors are able to detect victims using thermal cameras and heart beat sensors~\cite{6027084}, but as these measurements are uncertain, false positives and false negatives might occur. The same holds true for hazardous environments like fires, gas leaks, structurally unsafe areas, chemical spills, or radiation. Data retrieval and preprocessing are done in parallel with securing the perimeter, so that all information is available when phase \texttt{III} begins. Based on suggested POIs, the system computes optimal paths through the generated map, reducing time-to-rescue (Phase \texttt{IV}) as the rescuers do not need to explore the building to the same extent. The proposed system applies RPD to the situation and extends the available planning from local conditions to higher ECOM levels.
+
+When planning the access paths, a variety of factors must be taken into account. The responder must maintain a safe distance from hazardous environments, avoid overhanging structures, and the ground must be stable and level. As these variables are extracted from uncertain data, they are subject to uncertainties. The \IC\ has to perform trade-offs to choose between alternatives, for example favoring a longer, faster path over a more dangerous, shorter path.
+
+While the \IC\ is instructing the rescuer to follow one path, the rescuer feeds back information about victims or new hazards. The \IC\ incorporates this information into the system. This is of high importance as features might not only have been missed by the robots, but detected features might change during the rescue operation. Fires can start or extinguish, subsequent collapses can make areas inaccessible, or debris is removed after the initial reconnaissance.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{System Overview} \label{sec:overview}
+
+Combining expertise in visualization, cognitive systems engineering, rescue robotics, and discussions with rescue experts, we determined requirements to make our system useful for the \IC. The visualization components are designed to comply with theories on sense-making and decision-making and have been tested in a user study with external domain experts. The requirements are as follows:
+\begin{description}
+\item[R1] The system must increase spatial awareness by allowing for interactive exploration of the collapsed structure.
+\item[R2] The system must enable the \IC\ to interactively annotate the acquired data to react to changing circumstances.
+\item[R3] The \IC\ must be able to inspect multiple access paths, compare them, and make trade-offs.
+\item[R4] The system must provide the tools to select a globally optimal path and allow for its execution.
+\end{description}
+
+The proposed system employs multiple linked views to address these requirements (see Figure~\ref{sec:overview:system}). In order to fulfill {\bfseries R1}, our system renders the point cloud interactively, preserving occlusion and helping the \IC\ to form a consistent model of the structure. The \IC\ can seamlessly annotate newly discovered entrances, hazards, POIs, and inaccessible areas, thus fulfilling {\bfseries R2}. To address {\bfseries R3} and {\bfseries R4}, we integrate a visual representation of the different paths into the 3D visualization, and provide specific in-depth analysis tools.
+
+The following sections address the components of our system. Before the acquired data can be used, a preprocessing must be performed (Section~\ref{sec:overview:preprocessing}). We describe the path computation process and the analysis together with comparison metrics in Section~\ref{sec:overview:pathcomputation}. Section~\ref{sec:overview:annotation} explains the annotation of the point cloud. Section~\ref{sec:overview:3dvisualization} provides details on the considerations that went into designing the 3D visualization components of our system.
+
+\begin{figure}
+    \centering
+    \framebox[0.9\columnwidth][c]{
+        \includegraphics[width=0.9\columnwidth]{figures/fig-overview-system2.png}
+    }
+    \caption{A screenshot of our system for a typical scenario. The right view allows for detailed inspection and navigation.}
+    \label{sec:overview:system}
+\end{figure}
+
+
+\subsection{Data Preprocessing} \label{sec:overview:preprocessing}
+The retrieved data from the unmanned robots is an unstructured point cloud. One issue with rendering such point clouds is missing occlusion information and the non-uniform distribution of measured points. To avoid this problem, we perform a binning to obtain a three-dimensional voxel data structure on a regular grid. The voxel size is dependent on the scan resolution of the robot, and is a trade-off between resolving smaller details and increasingly noisy data. In our cases, voxel sizes of about 5\,cm were sufficient with regard to this trade-off. From this point on we call a measurement in the original point cloud a \emph{point} and refer to a position in the grid-based, binned point cloud as a \emph{voxel}.
+
+\noindent {\bfseries Attribute derivation.} In the second part, derived attributes are computed that are used to determine the set of rescue paths and to support their analysis. We compute a \emph{hazard distance field} (Figure~\ref{fig:overview:precomputation}) that denotes the distance to the closest hazard points. The \emph{support field} (Figure~\ref{fig:overview:precomputation}) shows the available supporting area. This value determines whether there is enough floor available for a responder to walk on. The \emph{occupancy field} (Figure~\ref{fig:overview:precomputation}) denotes the number of points each voxel is based on. A higher occupancy means that the voxel contains more points in the original point cloud data and thus provides a higher certainty. The \emph{size field} shows for each voxel if a rescuer can fit into the space. We calculate two size values, one with the rescuer standing up, and a second while crouching. In order to determine the steepness of surfaces, we compute the least-squares fitted plane based on all the points in the original point cloud which are covered by a voxel. The normal of the resulting plane is used as the normal for the voxel.
+
+\subsection{Data Annotation} \label{sec:overview:annotation}
+Each voxel can belong to one of five classes. \emph{Unclassified} is the default type for all voxels. \emph{Start} voxels are accessible entry points. This means that paths can start from any of these points. \emph{POI} voxels are destination points for paths. These indicates that there is a potential victim or another mission-critical element at this location. \emph{Hazard} voxels have been declared as dangerous. Each hazard area has a normalized severity denoting how dangerous it is. \emph{Forbidden} voxels can only be declared by the \IC\ and are areas completely out of reach. These points are used when, for example, a corridor collapses and is not accessible anymore. The classification for each voxel is modified by interacting with the 3D rendering using the mouse and keyboard, thus fulfilling {\bfseries R2}. 
+
+\subsection{Path Computation} \label{sec:overview:pathcomputation}
+We employ the A* algorithm for the path computations~\cite{4082128}. The algorithm works as follows: For the current voxel $x$, the estimated remaining distance is calculated for all unvisited neighboring voxels $y_i$. This value is the sum of the cost to reach $x$, the cost to move from $x$ to $y_i$, and the estimated cost to reach the target from $y_i$. From these voxels the lowest cost is chosen as the next candidate. For a comprehensive description of the algorithm we refer the reader to the book by Russel and Norvig~\cite{AStar}.
+
+When computing a path, a metric is used to determine the cost of moving from one voxel to its neighbor. Thus, it is possible to compute several optimal paths by changing this metric. The metric is composed of several, weighted sub-metrics that are summed up to yield:
+
+\begin{equation}
+\begin{array}{r@{}l}
+m = & L_2(\mathbf{p},\mathbf{q}) + w_h \cdot \textrm{hazard}(\mathbf{q}) + w_s \cdot \textrm{size}(\mathbf{q}) + \vspace*{0.1cm} \\
+  & w_n \cdot \textrm{normal}(\mathbf{q},\varphi) + w_{sup} \cdot \textrm{support}(\mathbf{q},n)
+\end{array}
+\end{equation}
+
+\noindent where $w_h$, $w_s$, $w_n$, and $w_{sup}$ are the weights that are varied between different path computations. $\mathbf{p}$ is the current voxel and $\mathbf{q}$ is the next voxel under consideration, $\textrm{hazard}(\mathbf{q})$ returns the hazard severity, $\textrm{size}(\mathbf{q})$ is a binary function that determines if there is enough space above the voxel $\mathbf{q}$, $\textrm{normal}(\mathbf{q},\varphi)$ computes the surface normal and returns a response between the maximum allowed deviation $\varphi$ and the gravity vector, and $\mathrm{support}(\mathbf{q},n)$ is the number of supporting voxels, with $n$ being a threshold determining the number of voxels needed to consider $\mathbf{q}$ being supported.
+
+\todo{Add a long section explaining the adaptive sampling}
+
+\subsection{Visual Path Analysis} \label{sec:overview:pathanalysis}
+The \IC\ uses linked views to filter the large number of computed paths in order to make an informed decision about an optimal trade-off. As the details of these trade-offs depend on the situation and the experience of the \IC, we provide tools presenting information the \IC\ requests, like \emph{Path Length} versus \emph{Minimal Hazard Distance} or \emph{Maximum Path Inclination} versus \emph{Minimal Support}. The employed views have been selected to support single and multiple path analysis, as well as single and multiple attribute analysis. By using these views interactively, the \IC\ can make full use of his knowledge in a strategic decision-making scenario. In the following, we will describe the intended role in the path analysis process for each view. As the path analysis begins with a large set of paths that is filtered, views facilitating comparison of multiple global path attributes for several paths are used in the initial analysis phase. Later, the expert takes into account how attributes vary locally along the paths for a candidate subset of paths.
+
+\begin{figure*}
+	\centering
+	\subfigure[Profile Plot]{
+	    \fbox{\includegraphics[width=0.28\textwidth]{figures/fig-analysis-profile.png}}
+	    \label{fig:overview:analysis:profile}
+	}
+	\hfill
+	\subfigure[Parallel Coordinates Plot]{
+	    \fbox{\includegraphics[width=0.28\textwidth]{figures/fig-analysis-pcp.png}}
+	    \label{fig:overview:analysis:pcp}
+	}
+	\hfill
+	\subfigure[Scatter Plot Matrix]{
+	    \fbox{\includegraphics[width=0.28\textwidth]{figures/fig-analysis-scatter.jpg}}
+	    \label{fig:overview:analysis:scatter}
+	}
+	\caption{Analysis views supporting comparative path analysis. (a) the Profile Plot presents the change of a single attribute along each path; here the distance to the closest hazard. (b) the Parallel Coordinates Plot shows correlations between attributes. (c) the Scatter Plot Matrix depicts the correlations of all attributes.}
+\end{figure*}
+
+\subsubsection{Profile Plot} \label{sec:overview:analysis:profile}
+In order to enable the analysis of attribute changes along a path, we include a \emph{Profile Plot} (PP). This variation of a line plot enables the \IC\ to spot outliers among the paths and measurement errors that would present themselves as single spikes and shifts (see the violet line in Figure~\ref{fig:overview:analysis:profile}).
+
+Several design considerations were made to ensure effective use of the PP. First, as a link between the 3D rendering and the other visualizations, the paths are shown in the same color as in the 3D rendering with their end points emphasized. Finally, the scale of the y-axis of the PP has been chosen such that attribute value discrimination becomes possible in regions of high importance. This is achieved by splitting the y-axis into a sub-linear, a linear, and a super-linear part. The splitting occurs around values of importance, thus providing a higher dynamic range to important values. An example of this remapping can be found in Figure~\ref{fig:overview:analysis:profile} that shows the \emph{Hazard Distance} on the y-axis. For this attribute, there is a non-linear importance of the value range, requiring higher detail for the important value differences. In addition, the \IC\ can toggle a transparent layer to further highlight the important value range. The transparency of the layer is proportional to the amount of remapping that was performed.
+
+\subsubsection{Parallel Coordinates Plot} \label{sec:overview:analysis:pcp}
+Figure~\ref{fig:overview:analysis:pcp} shows the \emph{Parallel Coordinates Plot} (PCP) of our system. PCPs are very well suited to detect  patterns in the data, deviations from these patterns, and also to enhance interactive exploration of data sources~\cite{Tory05aparallel}.
+
+In our system, the PCP axes show the derived global path attributes, for example \emph{Path Length}, \emph{Minimal Hazard Distance}, \emph{Average Hazard Distance}, or \emph{Standard Deviation of Support}. Through attribute exploration, the \IC\ can move from a mental simulation of alternatives to simulation supported by the decision support system, thus amplifying RPD. The ability to explore trade-offs between alternative paths should facilitate a strategic COCOM decision mode for the targeting ECOM level. In addition to filtering of paths the \IC\ can select a path in this view and the interaction is replicated in the system. Detecting previously unknown correlations and the ability to filter large parts of the data helps to fulfill {\bfseries R3} and {\bfseries R4}.
+
+We have taken into account several design considerations for the PCP. One aspect is to avoid confusion introduced through the visual linking of the facilitated views. While using the same colors for same paths supports mental registration, we ensure that this linking does not result in a direct matching of the paths. In the PP, the path length is mapped to the x-axis; this is not the case for the PCP, where a line does not have any spatial inference. Therefore, we have chosen to avoid the horizontal layout usually adapted in PCPs and rotate the PCP by 90 degrees instead. A vertically oriented PCP is read from top to bottom, so the most important variables, \emph{Path Length} and \emph{Minimal Hazard Distance}, are displayed on the top of the plot. For an intuitive understanding of the path attributes, we have ordered each axis in such a way that the preferable values are always on the left. 
+
+Arranging the \emph{Minimal Hazard Distance} in the second row enables direct semantic grouping with the other hazard-related attributes. The support-related attributes indicate how comfortable it is for a human to take a path. To indicate that values below 50\,cm are not advisable, we gray out the value range between 0\,cm and 50\,cm. As the actually needed support depends on several parameters, we do not discard paths based on this parameter but instead apply this masking procedure to leave the final decision to the \IC .
+
+\subsubsection{Scatter Plot Matrix} \label{sec:overview:analysis:scatter}
+The PCP is primarily used for aspects that we foresee that the \IC\ wants to compare frequently. However, in line with the literature on resilience engineering~\cite{Lundberg2012} we also provide comparisons that cannot be foreseen in advance. Therefore, we use a Scatter Plot Matrix (SPLOM) to show relations between all attributes. Each individual scatter plot shows the correlation between two attributes and is used to verify known relationships or discover new correlations~\cite{Li2008}. Figure~\ref{fig:overview:analysis:scatter} shows the SPLOM.
+
+\subsection{3D Visualization} \label{sec:overview:3dvisualization}
+\noindent {\bfseries Point cloud visualization.} Rendering the unfiltered point cloud was insufficient, as missing depth cues inhibited the necessary immersion. A voxelized representation was chosen, as rendering each voxel using axis-aligned boxes solves the occlusion problem (Figure~\ref{fig:teaser}(a-c)). In addition to shaded rendering, we provide a simulated depth image that uses the normalized depth as a color scheme. This method resembles the output of range imaging cameras \IC\ are familiar with. In order to deal with occlusion, like a roof covering a building, the \IC\ can interactively modify clip planes.
+
+\noindent {\bfseries Projective Texturing.} Foobar
+
+\noindent {\bfseries Bump Mapping.} Foobar
+
+\noindent {\bfseries Access path visualization.} In addition to using the same color as the other visualizations for each path, the \IC\ can select a different coloring scheme to inspect the stored attributes of the paths. Each path attribute can be mapped to the path segments for a quick visual analysis. We enable the user to select paths in the rendering, highlighting these paths in the linked views and desaturating all other paths.
+
+The \IC\ can use the visualization for a virtual walk-through to inspect whether a plan might actually work. It be steered by the \IC , or the camera follows a selected path automatically. By inspecting this information, the \IC\ can use his own experience to judge whether a path is feasible.
+
+\noindent {\bfseries Immersive Environments.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results} \label{sec:results}
+\begin{figure*}
+\centering
+   \subfigure[An ensemble of paths leading away from a construction worker standing on the edge of a pit.] {
+       \fbox{\includegraphics[width=0.23\textwidth]{figures/tower-case-path.png}}
+    \label{fig:overview:case:tower}
+    }
+    \hfill{}
+    \subfigure[The Bremen rescue arena, which is used to test the autonomy of search \& rescue robots.] {
+        \fbox{\includegraphics[width=0.23\textwidth]{figures/rescue-case-path.png}}
+        \label{fig:overview:case:arena}
+   }
+   \hfill{}
+   \subfigure[Three classes of paths in the Tokohu application case at an intermediate step.]{
+        \fbox{\includegraphics[width=0.23\textwidth]{figures/fig-analysis-rendering.jpg}}
+        \label{fig:overview:analysis:paths}
+   }
+   \hfill{}
+   \subfigure[Renderings of the different field values as computed in Section~\ref{sec:overview:pathcomputation}.]{
+       \includegraphics[width=0.23\textwidth]{figures/fig-overview-fields.png}
+       \label{fig:overview:precomputation}
+   }
+   \caption{The rendering component used in the application case (a) and test cases (b) and (c). The filtered paths are shown in the rendering to provide an increased spatial awareness. Different weights for hazards lead to distinct optimal paths to the POI. (d) shows the representation of the hazard, occupancy, and support field values that are available for inspection.}
+\end{figure*}
+
+Since autonomous robots are not yet used in emergency situations, it is not possible to apply our system to a real-world disaster area. Instead, to illustrate the flexibility of our system, we describe the application to one major application case and two test cases in this section.
+
+\noindent {\bfseries Construction site.} Figure~\ref{fig:overview:case:tower} shows a point cloud acquired at a construction site with a LiDAR scanner being inside an excavation pit. The original dataset consisting of $50$ million points was resampled to $3.5$ million voxels with a voxel size of 5\,cm in 3 minutes 30 seconds on a 3\,GHz four-core CPU. 
+
+\noindent {\bfseries Rescue arena.} Figure~\ref{fig:overview:case:arena} shows an ensemble of paths through the Bremen rescue arena~\cite{varsadan08}, a testing arena built specifically for search \& rescue scenarios. The original point cloud consists of $28$ million points, reduced to $5.3$ million points with 4\,cm resolution.
+
+\subsection{Tohoku Application Case} \label{sec:results:applicationcase}
+%\begin{figure}[b]
+%    \vspace{-0.5cm}
+%    \centering
+%    \subfigure[\emph{Standard Deviation of Support} in relation to the \emph{Path Length}] {
+%        \includegraphics[width=0.3\columnwidth]{figures/pathlength-stddevsupport.png}
+%        \label{fig:overview:analysis:lengthstddev}
+%    }
+%    \hspace{0.5cm}
+%    \subfigure[\emph{Average Hazard Distance} in relation to the \emph{Path Length}] {
+%        \includegraphics[width=0.3\columnwidth]{figures/pathlength-averagedistance.png}
+%        \label{fig:overview:analysis:lengthavg}
+%    }
+%    \caption{Two zoom-ins of the Scatterplot Matrix (Figure~\ref{fig:overview:analysis:scatter}).  (a) \emph{Standard Deviation of Support} and (n) \emph{Average Hazard Distance} in relation to the \emph{Path Length}.}
+%\end{figure}
+
+The major use case is based on three scans from a collapsed building at Tohoku university in the aftermath of the 2011 earthquake. As there had been partial collapses in the office building, it proved to be a valid and useful simulated real-world application case. The resulting dataset has been acquired with latest state-of-the-art equipment and consists of $26$ million sampling points~\cite{journals/jfr/NagataniKOOYTNYKFK13}, which we resampled to a voxel grid of $4$ million voxels with a voxel size of 3\,cm. Figure~\ref{fig:teaser:1} shows a closeup rendering of the data set with level of detail is sufficient for detailed inspection.
+
+Figure~\ref{fig:teaser:3} shows an overview of the scanned area with the selected entry area at the bottom in cyan and the POI in green at the top. No hazards were detected by the robots as this was not part of their mission profile. The task for this application case was as follows: the \IC\ needed to find the shortest path between the entry and the POI. While traversing the path, a rescuer would detect two hazard clouds (red highlights) and the system must be able to react to this change.
+
+Figure~\ref{fig:overview:analysis:paths} shows a subset of computed paths after the second hazard has been discovered. There is one class of paths (purple) that evades the first hazard and another class (green) that evades the second hazard. The parallel coordinates plot (Figure~\ref{fig:overview:analysis:pcp}) makes it possible to detect a path that belongs to both classes with a maximum in the \emph{Minimal Hazard Distance}, while having a long \emph{Path Length}. The scatterplot showing the relationship between \emph{Path Length} and \emph{Standard Deviation of Support} indicates that the shorter paths tend to pass through more unstable areas (see Figure~\ref{fig:overview:analysis:scatter}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Evaluation} \label{sec:evaluation}
+We performed an evaluation of our system with nine external experts working in the field of Urban Search \& Rescue. Of these experts, five (A--E) are emergency responders, three (F--H) are researchers, and one (J) is a consultant for a national technical relief agency. As the goal of the study was to include as many international experts as possible, and being aware of their time constraints, we decided to create videos and images of our system for the application case and created an interactive webpage rather than requiring training for hands-on use of our system. 7 of 9 experts finished the evaluation and provided answers to all questions. In the analysis, we consider the partial responses for the cases where an answer was provided. The full evaluation and replies are available in the supplemental material. Here, we will discuss important positive and negative answers by the experts. The replies to these questions are on a 5-point Likert scale. \\
+\textbf{Path Representation} This component tests the usefulness of embedding the paths into the 3D rendering. It shows three images depicting a similar situation as Figure~\ref{fig:teaser:2} with three paths each. We asked the experts which of the paths they would choose and all but two chose the paths that evaded the hazards. A second question was asked to compare the lengths of the shortest and the longest path. While the correct answer was 1.54$\times$, the experts stated an average of 2.56$\times$. This means that, while the experts are capable of estimating the length, they overestimate path distances, making it necessary to provide accurate information in the PP and PCP.\\
+\textbf{Profile Plot} To evaluate the PP, we provided a reduced plot containing only the orange, green, and yellow paths from Figure~\ref{fig:overview:analysis:profile}. We asked the experts to assess their understanding of the plot (average: 3.5) and its usefulness (average: 3.71). We asked the experts to relate the two longest paths to each other; all eight experts providing answers arrived at the correct conclusion that the orange path is shorter, but crosses the hazard area once. \\
+\textbf{Parallel Coordinates Plot} The level of self-assessed understanding is lower than the PP (average: 1.66 vs. 3.5) which can be attributed to the fact the experts might be more familiar with line plots than PCPs. Despite their unfamiliarity, all five experts providing feedback answered identified the shortest and the safest path correctly. This, and the average rated usefulness of 2.14,  agrees with previous research that a dissociation between preference and performance is common in interface design~\cite{andre1995users}. In the following open questions, the experts favored safe, long paths over shorter, more dangerous paths while not paying much attention to the available support. This confirmed our previous discussion about the ordering of attributes in the PCP.\\
+\textbf{Scatterplot Matrix} For this representation, the very low level of self-assessed knowledge (average: 1.16) and usefulness (average: 1.28) is, just as the PCP, probably due to the fact that few, if any, experts have worked with SPLOMs before. Only J provided replies to the questions asking for the shortest and the most stable path with regard to the hazard distance, and provided the correct answer. A comment from E summarizes the result for the SPLOM component: ``[this] is more information than I would want to interpret during a SAR mission''. A SPLOM can have a beneficial impact to multivariate analysis~\cite{6064985}, but given the experts' reluctance, we make the SPLOM optional instead.\\
+\textbf{Miscellaneous} For the last part, we asked for general feedback from the experts. J said that ``not detected hazards like structural integrity get visible by the density of scan points''. To the question if they ``[would] like to use [the] system in addition, or as a replacement, to [their] current tools'', B, C, E, F, and J were positive to using our system in addition to their current set of tools rather than of a full replacement. The only negative comment was from D, which regards the system as too complicated. 
+
+In conclusion, we received valuable feedback from the experts and we can see that most experts liked the system and would like to use it as a decision-support tool alongside their current applications. With the exception of the SPLOM, the majority of experts were able to retrieve important data from our system and use it for their decision-making.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusions and Future Work} \label{sec:conclusion}
+We presented a visualization system that optimizes the workflow of the \IC\ when dealing with SAR missions. We designed a linked, multiple-view system that computes and analyzes an ensemble of rescue paths. The resulting information is visualized for the \IC , who selects a path that is an optimal trade-off according to his experience and knowledge. To investigate the usefulness of the proposed system we have conducted a study with expert users. The resulting feedback makes us confident that the proposed system has the potential to improve future search \& rescue missions.
+
+%For future work, we like to perform a thorough in-use evaluation workshop with domain experts accompanying a real-world rescue scenario. This will provide us with valuable direct feedback to improve usability of the system. This includes researching methods on how to familiarize the SAR experts with the PCP and the SPLOM method. Furthermore, we plan to investigate the applicability of adaptive and stochastic sampling, like Monte-Carlo methods, on the high-dimensional parameter space for path computation. In addition, we will investigate the possibility of integrating video footage into the 3D point cloud rendering~\cite{1453517}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Acknowledgments}
+We like to thank the IRIDeS, the CREATE, and the IRS institutes for retrieving the Tohoku university scans. This work was partly supported by grants from the Excellence Center at Link\"oping and Lund in Information Technology (ELLIIT) and the Swedish e-Science Research Centre (SeRC), as well as VR grant 2011-4113. We thank the external experts for taking part in the evaluation.
+
+%\bibliographystyle{eg-alpha-doi}
+\bibliographystyle{eg-alpha}
+%%use following if all content of bibtex file should be shown
+%\nocite{*}
+\bibliography{bibliography}
+
+\end{document}

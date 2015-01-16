@@ -1,0 +1,21 @@
+Dear Sir or Madam,
+in this document attached to the invited submission "...", we want to highlight the changes that were made between the paper that was presented at VMV 2014 in Darmstadt, Germany (referred to as "paper" in the following) and the submitted version (referred to as "manuscript"). We included additional content in 5 distinct parts, which are described in the following in decending order of importance:
+
+1. Multidimensional Adaptive Sampling
+After fruitful comments from previous reviewers and discussions at the conference, we implemented a multidimensional sampling algorithm to replace the regular sampling that was done in the paper. The parameter space for the A* algorithm that produces an ensemble of paths was sampled on a regular grid with a predetermined step size. This naturally requires the finetuning of boundary values and the step size, leading to an unsatisfying sample distribution. Furthermore, in the paper it was not explained clearly enough that duplicate path results are discarded from the visualization.
+Both those shortcomings are addressed in the manuscript. The implemented multidimensional adaptive sampling approach only requires the broad definiton of boundary values and a stopping criterion and automatically focusses the path finding efforts on the regions where it is possible to find unique paths.
+
+2. Projective Texturing
+We implemented a projective texturing method to render arbitrary images into our scene as mentioned in the paper's future work. The use case for this is to use robots that are equipped with either infrared or visible light cameras and to provide the IC with access to these images immediately in the same environment. As the robots are aware of their orientation and location in the map, we retrieve the exact position of each taken image for a correct mapping. As the robots in the test cases we use in the paper were not equipped with images, we demonstrate the technique on the RoboCup Rescue Arena in Bremen with an image that was taken by one of the participants.
+
+3. Bump Mapping for Occupancy Values
+The paper included a rendering method that required the IC to switch modes in order to see the occupancy field, i.e. the validity of each voxel in our scene. To remove this context switch and to provide the IC with a more intuitive understanding of the occupancy field, we apply a bump mapping to the rendered cubes. The used bump map is repeating to reduce visual artifacts on cube borders, and the strength of the bump mapping scales with the occupancy of each cube. This leads to a non-intrusive roughness for the cubes in the regions that have a high occupancy.
+
+5. Rendering in Immersive Environments
+The manuscript now contains a section explaining the rendering of our system for immersive environments, for example steroscopic dome surfaces or the Oculus Rift. This enables an improved understanding of the scene geometry and (in the case of the Oculus Rift) is still portable enough to be used in the field. 
+
+4. Additional Light Sources
+Minor improvements on the lighting setup for the Phong-based shading were made. The renderer now supports an arbitrary number of light sources to make for a smoother lighting setup. On default, the light sources follow the camera, so no additional setup from the IC is needed.
+
+6. Performance Improvements
+Some performance improvements on the rendering algorithm were performed, decreasing the average frametime from about 100ms to about 35ms at 1080p resolution.
