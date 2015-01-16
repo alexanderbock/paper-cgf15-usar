@@ -1,0 +1,7 @@
+CGF USAR Paper Changelog
+=====
+
+- Changed teaser images
+- Rewrote part of Introduction
+- Taken Pointcloud visualization related work part from SSRR
+- Rewrote part of Decision-Making Theory
