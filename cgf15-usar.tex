@@ -259,7 +259,6 @@ m = & \textrm{L}_2(\mathbf{p},\mathbf{q}) + w_h \cdot \textrm{hazard}(\mathbf{q}
 \noindent where $w_h$, $w_s$, $w_n$, and $w_{sup}$ are the weights that are varied between different path computations. $\mathbf{p}$ is the current voxel and $\mathbf{q}$ is the next voxel under consideration, $\textrm{hazard}(\mathbf{q})$ returns the hazard severity, $\textrm{size}(\mathbf{q})$ is a binary function that determines if there is enough space above the voxel $\mathbf{q}$, $\textrm{normal}(\mathbf{q},\varphi)$ computes the surface normal and returns a response between the maximum allowed deviation $\varphi$ and the gravity vector, and $\mathrm{support}(\mathbf{q},n)$ is the number of supporting voxels, with $n$ being a threshold determining the number of voxels needed to consider $\mathbf{q}$ being supported.
 
 \subsubsection{Adaptive Sampling}
-To generate path ensembles, the parameter space consisting of $w_h$, $w_s$, $w_n$, $w_{sup}$, $\varphi$, and $n$ has to be sampled. Each sample in this parameter space is used to create a corresponding metric $m$, which in turn is used by the A* algorithm to generate an optimal path. As there is no prior information about the parameter space and no obvious correlation between parameter samples and their resulting paths, providing a reasonable sampling strategy is not trivial. Using a regular grid to create parameters is insufficient as it requires a priori information about reasonable boundary values, or a large number parameter values will result in the same path, thus wasting computing effort (see Figure~\ref{fig:sampling:comparison:regular}). On the other end of the sampling spectrum, Markov Chain Monte Carlo methods~\cite{gilks2005markov} are also very sensitive to correct initialization, take a large amount of samples to converge, and are not trivial to parallelize. Instead, we implemented a sequential adaptive sampling technique based on binary space partitioning (see Figure~\ref{fig:sampling:comparison:adaptive}). Using the previously computed paths, new samples are only generated in areas which can yield different paths. This rests on the intuitive assumption that if parameter values $p$ and $p \le q$ result in the same path $A$, all parameters $p \leq r \leq q$ also yield $A$. The sampling algorithm is explained in Algorithm~\ref{alg:sampling} and illustrated in Figure~\ref{fig:sampling:adaptive}. All parameters are separated into either non-recursive or recursive parameters. Non-recursive parameters are helper values that are needed for the subdivision of a recursive parameter. Please note that non-recursive parameters are not necessary in 1 dimensional parameter spaces. By separating the computation in non-recursive parameter values and recursive parameter values, it is easy to ensure that all cornering parameters for a recursive parameter have previously been computed. For each iteration, each dimension is bisected and the resulting path for the bisector is compared to the cornering paths. If the bisector path is equal to corner path, the recursion stops for that subspace. If they are different, a new bisector between the corner case and the current bisector is created alongside the necessary non-recursive parameters and the one recursive parameter. Figure~\ref{fig:sampling:adaptive} illustrates this step in two dimensions. The subdivision will continue until all recursive parameter values result in paths that have been computed before, thus not creating any new recursive parameters, or until the distance between the parameters is below a predefined $\epsilon$. This $\epsilon$ is necessary, as the adaptivity would otherwise find the boundary between two paths and with each iteration sampler closer to this boundary.
 
 \begin{figure}
 	\newcommand{\abSamplingComparisonWidth}{\linewidth}
@@ -268,13 +267,15 @@ To generate path ensembles, the parameter space consisting of $w_h$, $w_s$, $w_n
 		\includegraphics[width=\abSamplingComparisonWidth]{figures/regular_sampling.png}
 		\label{fig:sampling:comparison:regular}
 	}
-	\subfigure[Adaptive Sampling] {
+	\subfigure[Adaptive Sampling using binary space partitioning] {
 		\includegraphics[width=\abSamplingComparisonWidth]{figures/adaptive_sampling.png}
 		\label{fig:sampling:comparison:adaptive}
 	}
 	\caption{A comparsion between a regularly sampled one-dimensional parameter space and adaptive sampling. Vertical lines are samples, different colors symbolize different paths. In the regular sampling the green path is oversampled and the blue path is not sampled at all, while the adaptive sampling scheme samples all paths as evenly as possible.}
 	\label{fig:sampling:comparsion}
 \end{figure}
+
+To generate path ensembles, the parameter space consisting of $w_h$, $w_s$, $w_n$, $w_{sup}$, $\varphi$, and $n$ has to be sampled. Each sample in this parameter space is used to create a corresponding metric $m$, which in turn is used by the A* algorithm to generate an optimal path. As there is no prior information about the parameter space and no obvious correlation between parameter samples and their resulting paths, providing a reasonable sampling strategy is not trivial. Using a regular grid to create parameters is insufficient as it requires a priori information about reasonable boundary values, or a large number parameter values will result in the same path, thus wasting computing effort (see Figure~\ref{fig:sampling:comparison:regular}). On the other end of the sampling spectrum, Markov Chain Monte Carlo methods~\cite{gilks2005markov} are also very sensitive to correct initialization, take a large amount of samples to converge, and are not trivial to parallelize. Instead, we implemented a sequential adaptive sampling technique based on binary space partitioning (see Figure~\ref{fig:sampling:comparison:adaptive}). Using the previously computed paths, new samples are only generated in areas which can yield different paths. This rests on the intuitive assumption that if parameter values $p$ and $p \le q$ result in the same path $A$, all parameters $p \leq r \leq q$ also yield $A$. The sampling algorithm is explained in Algorithm~\ref{alg:sampling} and illustrated in Figure~\ref{fig:sampling:adaptive}. All parameters are separated into either non-recursive or recursive parameters. Non-recursive parameters are helper values that are needed for the subdivision of a recursive parameter. Please note that non-recursive parameters are not necessary in 1 dimensional parameter spaces. By separating the computation in non-recursive parameter values and recursive parameter values, it is easy to ensure that all cornering parameters for a recursive parameter have previously been computed. For each iteration, each dimension is bisected and the resulting path for the bisector is compared to the cornering paths. If the bisector path is equal to corner path, the recursion stops for that subspace. If they are different, a new bisector between the corner case and the current bisector is created alongside the necessary non-recursive parameters and the one recursive parameter. Figure~\ref{fig:sampling:adaptive} illustrates this step in two dimensions. The subdivision will continue until all recursive parameter values result in paths that have been computed before, thus not creating any new recursive parameters, or until the distance between the parameters is below a predefined $\epsilon$. This $\epsilon$ is necessary, as the adaptivity would otherwise find the boundary between two paths and with each iteration sampler closer to this boundary.
 
 \begin{algorithm}
 Initialization\;
@@ -334,25 +335,6 @@ Creating one recursive parameter value at 0.5\;
 \subsection{Visual Path Analysis} \label{sec:overview:pathanalysis}
 In our system, the IC uses linked views to filter the large number of computed paths in order to make an informed decision about an optimal trade-off. As the details of these trade-offs depend on the situation and the experience of the IC, we provide tools presenting information the IC requests, like \emph{Path Length} versus \emph{Minimal Hazard Distance} or \emph{Maximum Path Inclination} versus \emph{Minimal Support}. The employed views have been selected to support single and multiple path analysis, as well as single and multiple attribute analysis. By using these views interactively, the IC can make full use of his knowledge in a strategic decision-making scenario. In the following, we will describe the intended role in the path analysis process for each view. As the path analysis begins with a large set of paths that is filtered, views facilitating comparison of multiple global path attributes for several paths are used in the initial analysis phase. Later, the expert takes into account how attributes vary locally along the paths for a candidate subset of paths.
 
-\begin{figure*}
-	\centering
-	\subfigure[Profile Plot]{
-	    \fbox{\includegraphics[width=0.28\textwidth]{figures/fig-analysis-profile.png}}
-	    \label{fig:overview:analysis:profile}
-	}
-	\hfill
-	\subfigure[Parallel Coordinates Plot]{
-	    \fbox{\includegraphics[width=0.28\textwidth]{figures/fig-analysis-pcp.png}}
-	    \label{fig:overview:analysis:pcp}
-	}
-	\hfill
-	\subfigure[Scatter Plot Matrix]{
-	    \fbox{\includegraphics[width=0.28\textwidth]{figures/fig-analysis-scatter.jpg}}
-	    \label{fig:overview:analysis:scatter}
-	}
-	\caption{Analysis views supporting comparative path analysis. (a) the Profile Plot presents the change of a single attribute along each path; here the distance to the closest hazard. (b) the Parallel Coordinates Plot shows correlations between attributes. (c) the Scatter Plot Matrix depicts the correlations of all attributes.}
-\end{figure*}
-
 \subsubsection{Profile Plot} \label{sec:overview:analysis:profile}
 In order to enable the analysis of attribute changes along a path, we include a \emph{Profile Plot} (PP). This variation of a line plot enables the IC to spot outliers among the paths and measurement errors that would present themselves as single spikes and shifts (see the violet line in Figure~\ref{fig:overview:analysis:profile}).
 
@@ -370,18 +352,38 @@ Arranging the \emph{Minimal Hazard Distance} in the second row enables direct se
 \subsubsection{Scatter Plot Matrix} \label{sec:overview:analysis:scatter}
 The PCP is primarily used for aspects that we foresee that the IC wants to compare frequently. However, in line with the literature on resilience engineering~\cite{Lundberg2012} we also provide comparisons that cannot be foreseen in advance. Therefore, we use a Scatter Plot Matrix (SPLOM) to show relations between all attributes. Each individual scatter plot shows the correlation between two attributes and is used to verify known relationships or discover new correlations~\cite{Li2008}. Figure~\ref{fig:overview:analysis:scatter} shows the SPLOM.
 
+\begin{figure*}
+   \newcommand{\abInfoVisImageWidth}{0.3\textwidth}
+	\centering
+	\subfigure[Profile Plot]{
+	    \fbox{\includegraphics[width=\abInfoVisImageWidth]{figures/fig-analysis-profile.png}}
+	    \label{fig:overview:analysis:profile}
+	}
+	\hfill
+	\subfigure[Parallel Coordinates Plot]{
+	    \fbox{\includegraphics[width=\abInfoVisImageWidth]{figures/fig-analysis-pcp.png}}
+	    \label{fig:overview:analysis:pcp}
+	}
+	\hfill
+	\subfigure[Scatter Plot Matrix]{
+	    \fbox{\includegraphics[width=\abInfoVisImageWidth]{figures/fig-analysis-scatter.jpg}}
+	    \label{fig:overview:analysis:scatter}
+	}
+	\caption{Analysis views supporting comparative path analysis. (a) the Profile Plot presents the change of a single attribute along each path; here the distance to the closest hazard. (b) the Parallel Coordinates Plot shows correlations between attributes. (c) the Scatter Plot Matrix depicts the correlations of all attributes.}
+\end{figure*}
+
 \subsection{3D Visualization} \label{sec:overview:3dvisualization}
-\noindent {\bfseries Point cloud visualization.} Rendering the unfiltered point cloud was insufficient, as missing depth cues inhibited the necessary immersion. A voxelized representation was chosen, as rendering each voxel using axis-aligned boxes solves the occlusion problem (Figure~\ref{fig:teaser}(a-c)). In addition to shaded rendering, we provide a simulated depth image that uses the normalized depth as a color scheme. This method resembles the output of range imaging cameras IC are familiar with. In order to deal with occlusion, like a roof covering a building, the IC can interactively modify clip planes.
+\noindent {\bfseries Point cloud visualization.} Rendering the unfiltered point cloud was insufficient, as missing depth cues inhibited the necessary immersion. A voxelized representation was chosen, as rendering each voxel using axis-aligned boxes solves the occlusion problem (Figure~\ref{fig:teaser}(a-c)). In addition to shaded rendering, we provide a simulated depth image that uses the normalized depth as a color scheme. This method resembles the output of range imaging cameras IC are familiar with. In order to deal with occlusion, like a roof covering a building, the IC can interactively modify clip planes. Due to the discontinuous nature of the axis-aligned voxels, a camera-fixed setup of multiple light sources is used to provide good lighting.
 
-\noindent {\bfseries Projective Texturing.} Foobar
+\noindent {\bfseries Projective Texturing.} In order to provide the IC access to image and recordings from robots that would give him more detailed information on a particular location in the building, we implemented projective texturing~\cite{everitt2001projective}. Provided an orientation and a position, information that is readily available in the autonomous robots as they require this information for internal navigation, the acquired image or video is projected onto the axis-aligned bounding boxes~\cite{1453517}. As this information will not be required at all times, the IC can enable and disable individual projected images interactively.
 
-\noindent {\bfseries Bump Mapping.} Foobar
+\noindent {\bfseries Bump Mapping.}  While it is possible for the IC to inspect the occupancy field mapped to color as in Figure~\ref{fig:overview:precomputation}, we found that in most situation the color information needs to be used for the detection of hazardous environments and thus cannot be used to show the occupancy field. In order to remedy this, we implemented a texture-based bump mapping method that modifies up and down pointing normals based on a texture pattern. The texture is a structured noise pattern with periodic bounding conditions to inhibit noticeable artifacts between voxels. The strength of the bump mapping displacement is a linear dependence on the occupancy field. This attribute provides the IC with additional information about the reliability of each voxel without the need to switch between color maps, which would require a context switch for the IC.
 
 \noindent {\bfseries Access path visualization.} In addition to using the same color as the other visualizations for each path, the IC can select a different coloring scheme to inspect the stored attributes of the paths. Each path attribute can be mapped to the path segments for a quick visual analysis. We enable the user to select paths in the rendering, highlighting these paths in the linked views and desaturating all other paths.
 
 The IC can use the visualization for a virtual walk-through to inspect whether a plan might actually work. It be steered by the IC, or the camera follows a selected path automatically. By inspecting this information, the IC can use his own experience to judge whether a path is feasible.
 
-\noindent {\bfseries Immersive Environments.}
+\noindent {\bfseries Immersive Environments.} In addition to the rendering capabilities of laptop/desktop monitors, we wanted to provide the IC with the option of a more immersive environment in which to inspect the data. We used this option to show a stereoscopic movie of the application case and the rescue arena data sets to an audience of approximately 100 researchers at an international conference on rescue robotics (see Figure XXX). We received positive informal feedback from these research experts on the rendering over the course of later discussions. Furthermore, this allows the IC to inspect the data using a head-mounted display, such as the Oculus Rift (see Figure XXX). 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -433,7 +435,7 @@ Since autonomous robots are not yet used in emergency situations, it is not poss
 %    \caption{Two zoom-ins of the Scatterplot Matrix (Figure~\ref{fig:overview:analysis:scatter}).  (a) \emph{Standard Deviation of Support} and (n) \emph{Average Hazard Distance} in relation to the \emph{Path Length}.}
 %\end{figure}
 
-The major use case is based on three scans from a collapsed building at Tohoku university in the aftermath of the 2011 earthquake. As there had been partial collapses in the office building, it proved to be a valid and useful simulated real-world application case. The resulting dataset has been acquired with latest state-of-the-art equipment and consists of $26$ million sampling points~\cite{journals/jfr/NagataniKOOYTNYKFK13}, which we resampled to a voxel grid of $4$ million voxels with a voxel size of 3\,cm. Figure~\ref{fig:teaser:1} shows a closeup rendering of the data set with level of detail is sufficient for detailed inspection.
+The major use case is based on three scans from a collapsed building at Tohoku university in the aftermath of the 2011 earthquake. As there had been partial collapses in the office building, it proved to be a valid and useful simulated real-world application case. The resulting dataset has been acquired with latest state-of-the-art equipment and consists of $26$ million sampling points~\cite{journals/jfr/NagataniKOOYTNYKFK13}, which we resampled to a voxel grid of $4$ million voxels with a voxel size of 3\,cm. Figure~\ref{fig:teaser:1} shows a closeup rendering of the data set with level of detail is sufficient for detailed inspection. Using the same CPU as above and a GeForce GTX 580, we achieved average frame rates of about 30\,fps with our system.
 
 Figure~\ref{fig:teaser:3} shows an overview of the scanned area with the selected entry area at the bottom in cyan and the POI in green at the top. No hazards were detected by the robots as this was not part of their mission profile. The task for this application case was as follows: the IC needed to find the shortest path between the entry and the POI. While traversing the path, a rescuer would detect two hazard clouds (red highlights) and the system must be able to react to this change.
 
@@ -458,13 +460,15 @@ In conclusion, we received valuable feedback from the experts and we can see tha
 \section{Conclusions and Future Work} \label{sec:conclusion}
 We presented a visualization system that optimizes the workflow of the IC when dealing with SAR missions. We designed a linked, multiple-view system that computes and analyzes an ensemble of rescue paths. The resulting information is visualized for the IC, who selects a path that is an optimal trade-off according to his experience and knowledge. To investigate the usefulness of the proposed system we have conducted a study with expert users. The resulting feedback makes us confident that the proposed system has the potential to improve future search \& rescue missions.
 
+For future work, we would like to perform a thorough in-use evaluation workshop with rescue experts accompanying a simulated rescue scenario. This will provide us with valuable direct feedback to improve usability of the system. This includes researching methods on how to familiarize the SAR experts with the PCP and the SPLOM method and on the effectivity of using a head-mounted display to inspect the rendering.
+
 %For future work, we like to perform a thorough in-use evaluation workshop with domain experts accompanying a real-world rescue scenario. This will provide us with valuable direct feedback to improve usability of the system. This includes researching methods on how to familiarize the SAR experts with the PCP and the SPLOM method. Furthermore, we plan to investigate the applicability of adaptive and stochastic sampling, like Monte-Carlo methods, on the high-dimensional parameter space for path computation. In addition, we will investigate the possibility of integrating video footage into the 3D point cloud rendering~\cite{1453517}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Acknowledgments}
-We like to thank the IRIDeS, the CREATE, and the IRS institutes for retrieving the Tohoku university scans. This work was partly supported by grants from the Excellence Center at Link\"oping and Lund in Information Technology (ELLIIT) and the Swedish e-Science Research Centre (SeRC), as well as VR grant 2011-4113. We thank the external experts for taking part in the evaluation.
+We like to thank the IRIDeS, the CREATE, and the IRS institutes for retrieving the Tohoku university scans. This work was partly supported by grants from the Excellence Center at Link\"oping and Lund in Information Technology (ELLIIT) and the Swedish e-Science Research Centre (SeRC), as well as VR grant 2011-4113. We thank the external experts for taking part in the evaluation as well as the anonymous reviewers providing helpful feedback. Special thanks goes to Joel Kronander for many fruitful discussions about adaptive sampling methods.
 
 %\bibliographystyle{eg-alpha-doi}
 \bibliographystyle{eg-alpha}
