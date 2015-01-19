@@ -239,7 +239,7 @@ The following sections address the components of our system. Before the acquired
 \subsection{Data Preprocessing} \label{sec:overview:preprocessing}
 The retrieved data from the unmanned robots is an unstructured, annotated point cloud. One issue with rendering such point clouds is missing occlusion information and the non-uniform distribution of measured points. To avoid this problem, we perform a binning to obtain a three-dimensional voxel data structure on a regular grid. The voxel size is dependent on the scan resolution of the robot, and is a trade-off between resolving smaller details and increasingly noisy data. In our cases, voxel sizes of about 5\,cm were sufficient in all test cases with regard to this trade-off. From this point on we call a measurement in the original point cloud a \emph{point} and refer to a position in the grid-based, binned point cloud as a \emph{voxel}.
 
-\noindent {\bfseries Attribute derivation.} In the second part, derived attributes are computed on the voxel grid that are later used to determine the set of rescue paths and to support and inform their analysis. Figure~\ref{fig:overview:precomputation} shows a selection of these attributes. We compute a \emph{hazard distance field} (Figure~\ref{fig:overview:precomputation}, left) that denotes the distance to the closest hazard points. The \emph{support field} (Figure~\ref{fig:overview:precomputation}, right) shows the available supporting area for each voxel. This value determines whether there is enough floor available for a responder to walk on. The \emph{occupancy field} (Figure~\ref{fig:overview:precomputation}, center) denotes the number of points each voxel is based on. A higher occupancy means that the voxel contains more points in the original point cloud data and thus provides a higher certainty. The \emph{size field} shows for each voxel if a rescuer can fit into the space above the voxel. In the default settings, we calculate two size values, one with the rescuer standing up, and a second while crouching. However, the system is designed to allow easy integration of different geometries, such as additional unmanned robots. In order to compute viable paths, we also need orientation information to be able to exclude paths that would be too steep for a rescuer. In order to determine the steepness of surfaces, we compute the least-squares fitted plane based on all the points in the original point cloud which are covered by a voxel. The normal of the resulting plane is used as the normal for the voxel.
+\noindent {\bfseries Attribute derivation.} In the second part, derived attributes are computed on the voxel grid that are later used to determine the set of rescue paths and to support and inform their analysis. Figure~\ref{fig:imageenhancement:colors} shows a selection of these attributes. We compute a \emph{hazard distance field} (Figure~\ref{fig:imageenhancement:colors}, left) that denotes the distance to the closest hazard points. The \emph{support field} (Figure~\ref{fig:imageenhancement:colors}, right) shows the available supporting area for each voxel. This value determines whether there is enough floor available for a responder to walk on. The \emph{occupancy field} (Figure~\ref{fig:imageenhancement:colors}, center) denotes the number of points each voxel is based on. A higher occupancy means that the voxel contains more points in the original point cloud data and thus provides a higher certainty. The \emph{size field} shows for each voxel if a rescuer can fit into the space above the voxel. In the default settings, we calculate two size values, one with the rescuer standing up, and a second while crouching. However, the system is designed to allow easy integration of different geometries, such as additional unmanned robots. In order to compute viable paths, we also need orientation information to be able to exclude paths that would be too steep for a rescuer. In order to determine the steepness of surfaces, we compute the least-squares fitted plane based on all the points in the original point cloud which are covered by a voxel. The normal of the resulting plane is used as the normal for the voxel.
 
 \subsection{Data Annotation} \label{sec:overview:annotation}
 Each voxel can belong to one of five classes. \emph{Unclassified} is the default type for all voxels. \emph{Start} voxels are accessible entry points. This means that paths can start from any of these points. \emph{POI} voxels are destination points for paths. These indicates that there is a potential victim or another mission-critical element at this location, which needs to be reached. \emph{Hazard} voxels have been declared as dangerous due to, for example, an ongoing fire or a gas leak. Each hazard area has a normalized severity denoting how dangerous it is. These three classes can either be marked by the initial reconnaissance of the robot or interactively by the IC. \emph{Forbidden} voxels can only be declared by the IC and are areas completely out of reach. These points are used when, for example, a corridor collapses after the point cloud acquisition and is not accessible anymore. The classification for each voxel is modified by interacting with the 3D rendering using the mouse and keyboard, thus fulfilling {\bfseries R2}. 
@@ -375,42 +375,100 @@ The PCP is primarily used for aspects that we foresee that the IC wants to compa
 \subsection{3D Visualization} \label{sec:overview:3dvisualization}
 \noindent {\bfseries Point cloud visualization.} Rendering the unfiltered point cloud was insufficient, as missing depth cues inhibited the necessary immersion. A voxelized representation was chosen, as rendering each voxel using axis-aligned boxes solves the occlusion problem (Figure~\ref{fig:teaser}(a-c)). In addition to shaded rendering, we provide a simulated depth image that uses the normalized depth as a color scheme. This method resembles the output of range imaging cameras IC are familiar with. In order to deal with occlusion, like a roof covering a building, the IC can interactively modify clip planes. Due to the discontinuous nature of the axis-aligned voxels, a camera-fixed setup of multiple light sources is used to provide good lighting.
 
-\noindent {\bfseries Projective Texturing.} In order to provide the IC access to image and recordings from robots that would give him more detailed information on a particular location in the building, we implemented projective texturing~\cite{everitt2001projective}. Provided an orientation and a position, information that is readily available in the autonomous robots as they require this information for internal navigation, the acquired image or video is projected onto the axis-aligned bounding boxes~\cite{1453517}. As this information will not be required at all times, the IC can enable and disable individual projected images interactively.
+\noindent {\bfseries Projective Texturing.} In order to provide the IC access to image and recordings from robots that would give him more detailed information on a particular location in the building, we implemented projective texturing~\cite{everitt2001projective}. Provided an orientation and a position, information that is readily available in the autonomous robots as they require this information for internal navigation, the acquired image or video is projected onto the axis-aligned bounding boxes~\cite{1453517}. As this information will not be required at all times, the IC can enable and disable individual projected images interactively. Figure~\ref{fig:texturing} shows the Bremen Rescue arena~\cite{varsadan08} with two images taken by handheld cameras projected into the scene. As no location or orientation was available for these images, they have been positioned manually.
 
-\noindent {\bfseries Bump Mapping.}  While it is possible for the IC to inspect the occupancy field mapped to color as in Figure~\ref{fig:overview:precomputation}, we found that in most situation the color information needs to be used for the detection of hazardous environments and thus cannot be used to show the occupancy field. In order to remedy this, we implemented a texture-based bump mapping method that modifies up and down pointing normals based on a texture pattern. The texture is a structured noise pattern with periodic bounding conditions to inhibit noticeable artifacts between voxels. The strength of the bump mapping displacement is a linear dependence on the occupancy field. This attribute provides the IC with additional information about the reliability of each voxel without the need to switch between color maps, which would require a context switch for the IC.
+%\begin{figure}
+%	\centering
+%	\fbox{\includegraphics[width=\linewidth]{figures/empty.png}}
+	%\fbox{\includegraphics[width=\linewidth]{figures/fig-texturing-rescue.png}}
+%	\caption{The Bremen Rescue Arena with two projected images. The images did not contain location or orientation information, so they are manually positioned.}
+%	\label{fig:texturing}
+%\end{figure}
+
+\noindent {\bfseries Bump Mapping.}  While it is possible for the IC to inspect the occupancy field mapped to color as in Figure~\ref{fig:imageenhancement:colors}, we found that in most situation the color information needs to be used for the detection of environments and thus cannot be used to show the occupancy field. In order to remedy this, we implemented a texture-based bump mapping method that modifies up and down pointing normals based on a texture pattern. The texture is a structured noise pattern with periodic bounding conditions to inhibit noticeable artifacts between voxels. The strength of the bump mapping displacement is a linear dependence on the occupancy field. This attribute provides the IC with additional information about the reliability of each voxel without the need to switch between color maps, which would require a context switch for the IC. Figure~\ref{fig:imageenhancement:occupancy} shows the bump mapping on a floor at Tohoku University with the colored occupancy as comparison.
+
+%\begin{figure}
+%	\newcommand{\abBumpMappingImageWidth}{0.75\linewidth}
+%	\centering
+%	\subfigure[Bump Mapping] {
+%		\fbox{\includegraphics[width=\abBumpMappingImageWidth]{figures/occupancy_bumpmapping.png}}
+%		\label{fig:bumpmapping:bumpmapping}
+%	}
+%	\hfill
+%	\subfigure[Color-Coded] {
+%		\fbox{\includegraphics[width=\abBumpMappingImageWidth]{figures/occupancy_color.png}}
+%		\label{fig:bumpmapping:color}
+%	}
+%	\caption{Comparison images of showing the voxels' occupancy using a bump mapping technique (a) and by coloring the voxels (b).}
+%	\label{fig:bumpmapping}
+%\end{figure}
 
 \noindent {\bfseries Access path visualization.} In addition to using the same color as the other visualizations for each path, the IC can select a different coloring scheme to inspect the stored attributes of the paths. Each path attribute can be mapped to the path segments for a quick visual analysis. We enable the user to select paths in the rendering, highlighting these paths in the linked views and desaturating all other paths.
 
 The IC can use the visualization for a virtual walk-through to inspect whether a plan might actually work. It be steered by the IC, or the camera follows a selected path automatically. By inspecting this information, the IC can use his own experience to judge whether a path is feasible.
 
-\noindent {\bfseries Immersive Environments.} In addition to the rendering capabilities of laptop/desktop monitors, we wanted to provide the IC with the option of a more immersive environment in which to inspect the data. We used this option to show a stereoscopic movie of the application case and the rescue arena data sets to an audience of approximately 100 researchers at an international conference on rescue robotics (see Figure XXX). We received positive informal feedback from these research experts on the rendering over the course of later discussions. Furthermore, this allows the IC to inspect the data using a head-mounted display, such as the Oculus Rift (see Figure XXX). 
+\noindent {\bfseries Immersive Environments.} In addition to the rendering capabilities of laptop/desktop monitors, we wanted to provide the IC with the option of a more immersive environment in which to inspect the data. We used this option to show a stereoscopic movie of the application case and the rescue arena data sets to an audience of approximately 100 researchers at an international conference on rescue robotics (see Figure~\ref{fig:immersive:fisheye}). We received positive informal feedback from these research experts on the rendering over the course of later discussions. Furthermore, this allows the IC to inspect the data using a head-mounted display, such as the Oculus Rift (see Figure~\ref{fig:immersive:hmd}). 
+
+\begin{figure*}
+	\newcommand{\abImmersiveImageHeight}{0.25\linewidth}
+	\centering
+	\subfigure[Fisheye rendering] {
+		\fbox{\includegraphics[height=\abImmersiveImageHeight]{figures/fisheye_rendering.png}}
+		\label{fig:immersive:fisheye}
+	}
+	\hfill
+	\subfigure[Head-mounted display rendering] {
+		\fbox{\includegraphics[height=\abImmersiveImageHeight]{figures/hmd_rendering.png}}
+		\label{fig:immersive:hmd}
+	}
+	\caption{Two examples of immersive environments. Rendering the voxel data in a portable dome environment (a) allows many people to analyze the data simultaneously, while head-mounted displays increase the immersion for a single user (b).}
+	\label{fig:immersive}
+\end{figure*}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Results} \label{sec:results}
 \begin{figure*}
-\centering
+	\newcommand{\abResultsImageWidth}{0.3\textwidth}
+	\centering
    \subfigure[An ensemble of paths leading away from a construction worker standing on the edge of a pit.] {
-       \fbox{\includegraphics[width=0.23\textwidth]{figures/tower-case-path.png}}
+       \fbox{\includegraphics[width=\abResultsImageWidth]{figures/tower-case-path.png}}
     \label{fig:overview:case:tower}
     }
     \hfill{}
     \subfigure[The Bremen rescue arena, which is used to test the autonomy of search \& rescue robots.] {
-        \fbox{\includegraphics[width=0.23\textwidth]{figures/rescue-case-path.png}}
+        \fbox{\includegraphics[width=\abResultsImageWidth]{figures/rescue-case-path.png}}
         \label{fig:overview:case:arena}
    }
    \hfill{}
    \subfigure[Three classes of paths in the Tokohu application case at an intermediate step.]{
-        \fbox{\includegraphics[width=0.23\textwidth]{figures/fig-analysis-rendering.jpg}}
+        \fbox{\includegraphics[width=\abResultsImageWidth]{figures/fig-analysis-rendering.jpg}}
         \label{fig:overview:analysis:paths}
    }
-   \hfill{}
-   \subfigure[Renderings of the different field values as computed in Section~\ref{sec:overview:pathcomputation}.]{
-       \includegraphics[width=0.23\textwidth]{figures/fig-overview-fields.png}
-       \label{fig:overview:precomputation}
-   }
-   \caption{The rendering component used in the application case (a) and test cases (b) and (c). The filtered paths are shown in the rendering to provide an increased spatial awareness. Different weights for hazards lead to distinct optimal paths to the POI. (d) shows the representation of the hazard, occupancy, and support field values that are available for inspection.}
+   \caption{The rendering component used in the application case (a) and test cases (b) and (c). The filtered paths are shown in the rendering to provide an increased spatial awareness. Different weights for hazards lead to distinct optimal paths to the POI.}
+\end{figure*}
+
+\begin{figure*}
+	\newcommand{\abImageEnhancementHeight}{0.25\linewidth}
+	\centering
+	\subfigure[Projective texturing applied to the Bremen Rescue Arena case with a handheld and manually positioned image] {
+		\fbox{\includegraphics[height=\abImageEnhancementHeight]{figures/projective_texturing.jpg}}
+		\label{fig:imageenhancement:texturing}
+	}
+	\hfill
+	\subfigure[The occupancy for each voxel presented by bump mapping. The more occupancy a voxel has, the stronger the bump mapping effect is.] {
+		\fbox{\includegraphics[height=\abImageEnhancementHeight]{figures/occupancy.jpg}}
+		\label{fig:imageenhancement:occupancy}
+	}
+	\hfill
+	\subfigure[Attributes derived in the data preprocessing stage. From left: distance to the closest hazard, occupancy, and level of support] {
+		\fbox{\includegraphics[height=\abImageEnhancementHeight]{figures/fig-overview-fields.png}}
+		\label{fig:imageenhancement:colors}
+	}
+	\caption{The 3D visualization component is enhanced to present the IC with more information about the interior. Projective texturing (a) allows the IC to include images and videos into the environment. Either bump mapping (b) or color coding (c) can be used to show additional information for each voxel.}
+	\label{fig:imageenhancement}
 \end{figure*}
 
 Since autonomous robots are not yet used in emergency situations, it is not possible to apply our system to a real-world disaster area. Instead, to illustrate the flexibility of our system, we describe the application to one major application case and two test cases in this section.
@@ -470,6 +528,7 @@ For future work, we would like to perform a thorough in-use evaluation workshop 
 \section*{Acknowledgments}
 We like to thank the IRIDeS, the CREATE, and the IRS institutes for retrieving the Tohoku university scans. This work was partly supported by grants from the Excellence Center at Link\"oping and Lund in Information Technology (ELLIIT) and the Swedish e-Science Research Centre (SeRC), as well as VR grant 2011-4113. We thank the external experts for taking part in the evaluation as well as the anonymous reviewers providing helpful feedback. Special thanks goes to Joel Kronander for many fruitful discussions about adaptive sampling methods.
 
+%\newpage 
 %\bibliographystyle{eg-alpha-doi}
 \bibliographystyle{eg-alpha}
 %%use following if all content of bibtex file should be shown
