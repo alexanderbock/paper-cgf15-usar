@@ -13,3 +13,4 @@ CGF USAR Paper Changelog
 - Added additional evaluation parts from SSRR paper
 - Added reference to frame rates in 6.1
 - Added Joel as acknowledgments
+- Added rekated works section on indoor navigation
