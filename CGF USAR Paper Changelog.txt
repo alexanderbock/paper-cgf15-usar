@@ -1,7 +1,15 @@
 CGF USAR Paper Changelog
 =====
 
-- Changed teaser images
+- Remove teaser image 3 in favor of bigger images
 - Rewrote part of Introduction
 - Taken Pointcloud visualization related work part from SSRR
 - Rewrote part of Decision-Making Theory
+- Added subsection 5.3.1 on Adaptive Sampling + images
+- Added algorithm on adaptive sampling
+- Added subsection in 5.5 on projective texturing + image
+- Added subsection in 5.5 on bump mapping + image
+- Added subsection in 5.5 on immersive rendering + images
+- Added additional evaluation parts from SSRR paper
+- Added reference to frame rates in 6.1
+- Added Joel as acknowledgments
