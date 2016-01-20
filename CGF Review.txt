@@ -1,0 +1,210 @@
+01-Apr-2015
+
+Dear Mr. Alexander Bock:
+
+Manuscript ID CGF-15-IA-008 entitled "Supporting Urban Search & Rescue Mission Planning through Visualization-Based Analysis" which you submitted to Computer Graphics Forum, has been reviewed.  The comments of the reviewer(s) are included at the bottom of this letter.
+
+Based on the reviewers' comments the following decision has been taken:
+
+**Resubmit with major revisions**
+
+Please note that only one Major Revision cycle is allowed, so please consider the referees' comments carefully. In the next revision cycle the decision must be chosen from Reject, Minor Revision or Accept.
+
+To revise your manuscript, log into https://mc.manuscriptcentral.com/cgf and enter your Author Center, where you will find your manuscript title listed under "Manuscripts with Decisions."  Under "Actions," click on "Create a Revision."  Your manuscript number has been appended to denote a revision. Please DO NOT upload your revised manuscripts as a new submission.
+
+You will be unable to make your revisions on the originally submitted version of the manuscript.  Instead, revise your manuscript using a text processing program and save it on your computer.  Please also highlight the changes to your manuscript within the document by, e.g., using bold or colored text.
+
+Once the revised manuscript is prepared, you can upload it and submit it through your Author Center.
+
+Please respond to the comments made by the reviewers in a detailed revision report. In order to expedite the processing of the revised manuscript, be as specific as possible in your response to the reviewers. The revision report (preferably a .pdf file) should be uploaded as “Supplementary File” (with file designation “Additional File for Review but NOT for publication”).
+
+IMPORTANT:  Your original files are available to you when you upload your revised manuscript.  Please delete any redundant files before completing the submission.
+
+Because we are trying to facilitate timely publication of manuscripts submitted to Computer Graphics Forum, your revised manuscript should be uploaded as soon as possible, but within the next six months at the latest.
+
+The resubmission deadline is: 28-Sep-2015
+
+Once again, thank you for submitting your manuscript to Computer Graphics Forum and I look forward to receiving your revision.
+
+Sincerely,
+Dr. Oliver Deussen
+Editor in Chief, Computer Graphics Forum
+oliver.deussen@uni-konstanz.de
+
+
+
+Associate Editor
+Comments to the Author:
+The reviewers stated that the paper addresses an interesting and challenging application domain.
+
+However, there are two main issues mentioned by the reviewers:
+
+1. The CGF submission should contain at least 30% new material in comparison to the original VMV paper. Three reviewers criticize that there is not enough additional content in comparison to the original paper. 
+
+2. There is another publication by the same authors that contains almost the same content as the CGF submission: "An Interactive Visualization System for Urban Search & Rescue Mission Planning", IEEE International Symposium on Safety, Security, and Rescue Robotics, 2014.
+
+Moreover, reviewer 4 suggests to improve the paper by a more realistic data scenario or by enhancing the user study by a more 'real' experiments.
+
+In summary, I recommend that the authors resubmit their paper with major revisions. In this revision the authors must ensure that the paper contains at least 30% more content. Furthermore, they must clarify the differences and the contribution in comparison to their IEEE International Symposium on Safety, Security, and Rescue Robotics paper. Finally, they should also consider the comments of reviewer 4.
+Recommendation #1: Resubmit with Major Revisions
+
+
+Reviewer(s)' Comments to Author:
+Reviewer: 1
+
+Recommendation: Accept
+
+Comments:
+The submission is an extended version of an earlier paper that I've reviewed for VMV.
+All my requests to the conference submission are properly addressed, therefore I suggest accepting this paper.
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Good
+
+Importance: Good
+
+Technical soundness: Good
+
+Clarity of writing and presentation: Good
+
+Clarity and quality of illustrations (if present): High
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: High
+
+
+Reviewer: 2
+
+Recommendation: Resubmit with Major Revisions
+
+Comments:
+Two papers address the very same topic:
+"An Interactive Visualization System for Urban Search & Rescue Mission Planning" (International Symposium on Safety, Security, and Rescue Robotics, 2014) and one paper at VMV 2014.
+
+The papers are quite similar. Particular the VMV paper and the newly submitted CGF paper contain many identical paragraphs. 
+
+The introductions are identical. Only few words are replaced. 
+The STAR section is slightly enhanced. The new submission includes a short paragraph about indoor navigation. 
+Sections 3 and 4 are the same. 
+Section 5 was extended. Subsection 5.3 explains the adaptive sampling in more detail. This is an interesting part. Section 5.5. briefly describes the application of Projective Texturing, and Bump Mapping, both are typical rendering strategies. Moreover, the authors provide a stereoscopic movie. Section 6 is quite similar. Figure 9 includes few new images, and section 7 additionally discusses the evaluation of 3D representations and evacuation path walk-through.  
+
+To be accepted for publication on CGF it is required that the newly submitted manuscript will have to
+feature a minimum of 30% new or different material from the previous submission. 
+
+Although few extensions were provided, this requirement is not observed. 
+The VMV paper and the CGF submission have 
+- identical titles, 
+- identical structure,
+- many identical pictures and
+- a plenty of identical text.
+
+Hence, a major revision should be required to enhance the submission accordingly.
+
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Poor
+
+Importance: Good
+
+Technical soundness: Good
+
+Clarity of writing and presentation: Good
+
+Clarity and quality of illustrations (if present): Good
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: Average
+
+
+Reviewer: 3
+
+Recommendation: Reject
+
+Comments:
+In principle, the paper is a well done design study in an interesting application domain.
+However, there are two main issues that make the paper not suitable for publication:
+- There is too less additional content to the VMV14 paper that would justify an additional journal publication.
+- There is another publication by the same authors for the 2014 IEEE International Symposium on Safety, Security, and Rescue Robotics (SSRR) that contains almost the same content as the submission at hand.
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Low
+
+Importance: Good
+
+Technical soundness: Good
+
+Clarity of writing and presentation: Good
+
+Clarity and quality of illustrations (if present): Average
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: Low
+
+
+Reviewer: 4
+
+Recommendation: Resubmit with Major Revisions
+
+Comments:
+The authors have submitted a revised version of a VMV 2014 paper to Computer Graphics Forum. In my VMV review, I voted a neutral score for the submission (review pasted below). Generally, the authors address an interesting and challenging application domain. The presented visual-interactive design allows analysts to coordinate emergency operations in terrain bases on incomplete information. Specifically, 3D visualization of possible paths in conjunction with data visualization methods is proposed for situational awareness and decision making.
+The revised version includes a new subsection on parameter space sampling for path generation. Also, the work includes an enhanced environment visualization which now also shows background texture and a noise texture pattern to map, in addition to uncertainty, a second data variable to the scene. Also, a paragraph on the potential of using immersive devices is added. The Thukoiu application section has been rewritten and Figure 10 is new. Also, some more statistics are reported from the conceptual expert study (on 3D representation).
+
+For a journal follow-up submission, I found the revision to be rather incremental, but not adding substantially new material. While I do believe the work is interesting and on a very challenging problem, there are many open issues where to continue the work. First, the approach so far is a concept and no ‘real’ experiments with actual sensor data as described have been performed. No path planning was experimented on real data, and hence, we cannot assess the robustness and quality of the path planning resulting from the optimization of the joined formula in Section 5.3. It remains unclear how the parameters (e.g., hazard, size, surface normal) would relate to real-world situations.  Second, I still would expect legacy map data to be available and which would need to be included somehow in the approach. Considering it takes time to send a robot into an environment and acquire measurements, there should also be time to get legacy 2D map material and consider for the solution. Then, as regarding the actual operation, there should be a communication link between the commander and the field units, which in some way would need to be included in the design.. Finally, the evaluation remains based on interviews with experts and screenshots, not actual application.
+
+In summary, I would tend to recommend a major revision of this interesting work to improve and strengthen the concept by considering either a more realistic data scenario (including quantifiable values for hazardless for the environment) or enhance the user study by a more 'real' experiments.
+Minor comment:  Fig. 10 remain unclear to me; what is it supposed to show?
+
+
+—
+Copy of VMV Review
+
+The authors develop a concept for supporting rescue mission planning by a visual analysis system. Based on 3D point cloud data from a site of interest, the system computes candidate navigation paths which responders could take. Candidate paths can be compared in a 3D visualization. Also, properties of the paths like distance to hazard, length, uncertainty etc. can be compared by profile lines, parallel coordinate plots, and scatter plots. A prototypical implementation was created and applied to test data sets from a construction site and an actual building rescue mission. A qualitative evaluation of the concept was done with a panel of nine urban search and rescue experts. The evaluation showed principal interest in the tool, with some reservations to the scatter plot matrix view, which was regarded too time-consuming to use in a rescue scenario.
+
+The presented concept is interesting and a respective path planning tool may be highly useful for actual emergency operations. I found the concept to be described clearly. It focuses on important data properties, including spatial measurements of the site of interest, and comparative visualization of possible paths for selection. A set of relevant measurements for the paths are identified such as distance to hazard, planarity, length etc. which seem all relevant to the decision maker. The visual design of the tool is regarded plausible, although it seems, no iterative design process was adopted. It may have been useful to include domain experts early on in the design, which may have also helped with finding a better role for the SPLOM technique.
+
+The approach raises for me a couple of questions which could be discussed in more detail in the paper. What I am missing is a more in-depth consideration of 2D image and video data as an alternative or complementary modality. Working with 3D point clouds may involve complications with regard to data acquisition (e.g., how reliable is point cloud data in case of smoke, fire, variable illumination conditions etc.?) Will experts really rely on the point cloud data without considering 2D images from the interior? Also, the approach depends on classification of point cloud regions wrt. environmental properties. This seems to be done interactively. Do rescue operators have time to manually annotate, and how is this supported? Which automatic methods for classification are possible? Again here I think one needs to rely on 2D image information. Right now the whole data acquisition process is treated as a black box in the paper (referring to an unmanned robot doing the acquisition). It would be nice to have more discussion on these items.
+
+The paper may be acceptable on a margin basis and I would expect it to stimulate discussion on this novel and challenging application field. Recommendation: NEUTRAL
+
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Average
+
+Importance: Average
+
+Technical soundness: Average
+
+Clarity of writing and presentation: Good
+
+Clarity and quality of illustrations (if present): Good
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: Average

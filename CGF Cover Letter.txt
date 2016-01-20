@@ -1,0 +1,46 @@
+Dear reviewers,
+we would like to thank you for your comments on the paper. We agree that either a real-world dataset or a more 'real' experiment is necessary to motivate a CGF-invited journal publication. To this end, we performed a second evaluation, using an eye-tracking system, with four USAR experts during which the experts used the system themselves for their decision-making process.
+The rest of the cover letter is structured as follows; first, we will describe the methodology of the new user study, then we will address individual comments raised in the reviews, before listing major changes in the manuscript. As requested, we marked all changes between the submitted version and the current version in blue (except for Section 7.2, which is entirely new). Please note that many of these changes are editorial as we needed to shorten the paper to add the additional evaluation and stay in the 12-page limit.
+
+
+
+1. Evaluation
+A flaw in the previous evaluation was that the experts could not use the system themselves. While this restriction allowed us a greater sample size of experts, we remedied this drawback by conducting a second evaluation with four USAR experts from the Swedish Civil Contingency Agency that was supported by an eye-tracking device in which the experts used the system. We used the eye-tracking to gain information about which parts of the system were used in the decision-making process, as well as the ordering in which the views were used. 
+The evaluation was performed as follows; for each expert, a weakly enforced time slot of 45 minutes was allotted (evaluation times: 45.53, 48.72, 43.32, and 44.52 minutes respectively). About 8-9 minutes (6.25, 9.67, 8.75, and 8.78 minutes respectively) of this time was dedicated to calibrating the eyetracking system as well as explaining the system and views.
+The first phase only used the rendering view and was designed to familiarize the experts with the system, the control scheme, as well as the data set. For this, they were tasked to fly from a provided start point to a POI and report their findings. During the navigation, which was clumsy in the beginning, all experts increased their skill in navigating the environment. This leads us to believe that the navigation scheme can be learned by a user easily. During this phase, the experts also annotated the data with two hazard areas, the location of which was provided orally.
+After this initial exploration phase, the PP, PCP, and SPLOM were explained to the experts using drawings and examples. The examples were taken from a different domain so that the experts would understand the visualizations, but not to provide them with any rescue-related queues on how to interpret the data. The application was then switched to the four-view layout with three path class representatives visible and they were asked to choose between the three paths. The two additional paths were not shown before so that the experts did not gain any information purely from the rendering view alone. By showing all views with the paths at the same time, the eye-tracking data we gathered represents the first impression of the system layout and, thus, provides additional information about the usage.
+As the previous evaluation showed that the SPLOM was not considered useful, we wanted to test whether this result also held true when the experts where using the system. The eye-tracking data shows if the experts look at the view, but not whether they understand it. To this end, we changed the color scheme of the SPLOM in relation to the other views. This change would prompt comments and questions from the experts when they use this view. Experts A and D did not use the SPLOM at all, while the other two correctly correllated the different color schemes without difficulties. 
+The evaluation was concluded with asking the experts which combination of views they preferred, whether they would feel comfortable with their commander using the system (to test whether they liked the information the system as a whole provided), and which tools they are currently using. We did not include the last answers in the paper, as they did not differ from our description of the current workflow. 
+
+
+
+2. Review responses
+"No path planning was experimented on real data, and hence, we cannot assess the robustness and quality of the path planning resulting from the optimization of the joined formula in Section 5.3"
+The major case as described in Section 6.1 is a real-world dataset, which is a collapsed office building that is identical to a situation a USAR mission would take place in. The only difference to a real USAR mission is that no rescuers were allowed to enter it due to the radiation.
+Unfortunately, it is not possible to get a real USAR case, as no team currently possesses the necessary autonomous robots and can, during the mission, sacrifice a team member to deal with releasing the robots and data handling. For this, we need to wait until the opportunity cost of this option drops sufficiently. However, we believe (and confirmed this with other experts not included in the evaluations) that the major application case is a valid stand-in for both scanning, rescue missions, and path planning.
+
+"Second, I still would expect legacy map data to be available and which would need to be included somehow in the approach."
+We asked our collaboration partners regarding this suggestion. Their answer to this was that legacy maps are barely used in the current navigation, as they are non-trivial to retrieve in the limited time, as well as unreliable due to shifts in the building. We do agree with the comment that it would be desireable to include legacy maps as an optional overlay for the 3D maps. And we are working on how to create the mapping between the robot's 3D laser scan and the floor plan of a building reliably.
+
+"There is another publication by the same authors for the 2014 IEEE International Symposium on Safety, Security, and Rescue Robotics (SSRR) that contains almost the same content as the submission at hand."
+The SSRR publication presents an incremental increase over the VMV publication that added the immersive rendering capabilities and provided a different view on the evaluation results more suited for the recue community. This VMV-based invited paper is based both on the VMV, and the SSRR publication, but introduces major new concepts that improve the system in three ways:
+1. The adaptive sampling method to increase the usefulness of the computed paths
+2. The bump mapping technique to display multiple attributes simultaneously
+3. The eye-tracking supported study to inspect how the experts are using the system
+
+
+"Fig. 10 remain unclear to me; what is it supposed to show?"
+We changed the description of the figure in the text and added highlights to the image to focus the reader on the three different regions that are present in the sampled subspace.
+
+
+
+3. Changelog
+- We included Åsa Svensson as an author who provided the expertise for conducting the eye-tracking study and analyzing the results
+- We added Section 7.2, describing the new evaluation, and referenced it in the abstract and the conclusion
+- We rewrote parts of the introduction to differentiate this work from the both the VMV and SSRR publications
+- Figure 10 has been changed to highlight different regions (with the describtive text changed accordingly)
+- We had to shorten/reformulate many sentences in the manuscript to create the space within the 12-page-limit necessary for the description of the new evaluation. All changes are marked in the manuscript in blue.
+
+
+With kind regards,
+The Authors

@@ -1660,7 +1660,7 @@ submitted to \textit{#1}%
 \ifpdf
   \newcommand{\electronic@Version}{%
    \usepackage[pdftex,
-    pagebackref=true,
+    pagebackref=false,
     colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,
     bookmarks=false,
     pdfpagemode=UseNone,
