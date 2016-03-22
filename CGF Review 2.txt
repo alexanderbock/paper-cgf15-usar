@@ -1,0 +1,149 @@
+07-Dec-2015
+
+Dear Mr. Alexander Bock:
+
+Manuscript ID CGF-15-IA-008.R1 entitled "Supporting Urban Search & Rescue Mission Planning through Visualization-Based Analysis" which you submitted to Computer Graphics Forum, has been reviewed.  The comments of the reviewer(s) are included at the bottom of this letter.
+
+Based on these comments, the following decision has been taken:
+
+**Probably accept after minor revisions**
+
+To revise your manuscript, log into https://mc.manuscriptcentral.com/cgf and enter your Author Center, where you will find your manuscript title listed under "Manuscripts with Decisions."  Under "Actions," click on "Create a Revision."  Your manuscript number has been appended to denote a revision.  Please DO NOT upload your revised manuscripts as a new submission’
+
+You will be unable to make your revisions on the originally submitted version of the manuscript.  Instead, revise your manuscript using a text processing program and save it on your computer.  Please also highlight the changes to your manuscript within the document by, e.g., using bold or colored text.
+
+Once the revised manuscript is prepared, you can upload it and submit it through your Author Center.
+
+Please respond to the comments made by the reviewers in a detailed revision report. In order to expedite the processing of the revised manuscript, be as specific as possible in your response to the reviewers. The revision report (preferably a .pdf file) should be uploaded as “Supplementary File” (with file designation “Additional File for Review but NOT for publication”).
+
+IMPORTANT:  Your original files are available to you when you upload your revised manuscript.  Please delete any redundant files before completing the submission.
+
+Because we are trying to facilitate timely publication of manuscripts submitted to Computer Graphics Forum, your revised manuscript should be uploaded as soon as possible, and within the next three months at the latest.
+
+The resubmission deadline is: 06-Mar-2016
+
+Once again, thank you for submitting your manuscript to Computer Graphics Forum and I look forward to receiving your revision.
+
+Sincerely,
+Dr. Oliver Deussen
+Editor in Chief, Computer Graphics Forum
+oliver.deussen@uni-konstanz.de
+
+
+
+Associate Editor
+Comments to the Author:
+The authors have improved the manuscript significantly, addressing most of the reviewers' comments. However, the reviewers still found some minor issues which must be considered before the paper can be accepted.
+Recommendation #1: Probably Accept after Minor Revisions
+
+
+Reviewer(s)' Comments to Author:
+Reviewer: 2
+
+Recommendation: Accept
+
+Comments:
+The paper addresses an important problem - supporting  the path planning in rescue scenarios through visual analysis. The approach has been previously published at VMV 2014. However, the authors submitted an extended version that discusses particularly the aspect of adaptive sampling in more detail, and provides several novel figures to demonstrate the approach. 
+The different steps that needs to be carried out - data preprocessing, data annotation, path computation based on the adaptive sampling approach as well as the different views supporting the visual analysis  - are well designed and comprehensibly described. Two evaluation studies with domain experts demonstrate the usefulness of the approach. Hence, I would recommend to accept the paper. However, the titles of the VMV paper and the CGF submission are identical. So,I would suggest changing the title of the new submission
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Good
+
+Importance: Good
+
+Technical soundness: High
+
+Clarity of writing and presentation: Good
+
+Clarity and quality of illustrations (if present): Good
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: Good
+
+
+Reviewer: 5
+
+Recommendation: Accept
+
+Comments:
+The authors present a visualization system that supports search and rescue operations by the computation of rescue paths. The paper is well-written and technically sound. 
+
+My major remark is the following: As far as I understand the system should accelerate decision making. The visual interface however shows so much information that the IC may be overcharged. My major question is: Why not computing automatically which path is the shortest one / the most or least dangerous path / etc. and showing this information directly to the user instead of letting the user derive this information herself from the visualization?
+
+Additionally I have the following minor remarks:
+
+- It does not get clear to me why the voxel-based representation should be the best one for the rendering of the point cloud. The voxels generate artificial geometric structures (cubes) that are not present in the scene geometriy and that may distract the viewer. Please explain why other point clould rendering techniques (e.g. based on surfels or splatting) have not been used.
+- How are the attributes in Section 5.1 computed. This should be explained in more detail or references should be given. How is the global coordinate system (the world coordinate system) of the point cloud determined?
+- Section 5.2: how are start and POI voxels defined? Manually or automatically by the robot?
+- Section 5.3.1: The authors make a strong assumption for the subsampling of the cloud (i.e. if p and q result in the same path, all samples in between p and q also result in the same path. Explain why this is safe to assume. Has this been proven? What is the intuition behind this assumption?
+- It is questionable for me if all the scatter plots make sense, for example "Minimum Support" vs. "Average Support". I further agree with the probands that the plots may bring only limited benefit in practice because they are difficult to interpret
+- It is difficult to follow an individual path in the parallel coordinate plot because the paths occlude each other frequently. Did the authors consider to solve this problem?
+
+
+
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Good
+
+Importance: High
+
+Technical soundness: High
+
+Clarity of writing and presentation: High
+
+Clarity and quality of illustrations (if present): High
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: High
+
+
+Reviewer: 4
+
+Recommendation: Probably Accept after Minor Revisions
+
+Comments:
+I have previously reviewed this paper for VMV and CGF. I believe this is an interesting application paper. In my previous works I expressed concerns regarding the incremental nature of the improvements made as regarding the VMV paper. We also learned that the system has already been introduced in [1].
+
+In the revised version, the authors have improved the presentation and language of the paper throughout. The evaluation has been extended by a qualitative think-aloud & eye tracking study with 4 domain experts. This study leads to diverse findings as to the usability/effectiveness of the system. Two experts made use of the profile plot and the Parallel Coordinate Displays to justify their path plans, in addition to using the rendering module. Two other experts seemed to have basic understanding and/or acceptance problems with the data visualizations, as they relied only on the rendering view, not being able to use the data views. One expert was unable to use to zooming facility.
+
+This added study supports to some extent the idea that the system may be practically useful. However, its effectiveness seems to depend strongly on the user under concern. Technically, the evaluation makes use of an Eye-tracker, with the results presented as heat maps and a sequence diagram giving a rough idea about usage patterns.  The eye tracker data is used somewhat informally.  The added evaluation tends to marginally support the effectiveness of the system, but also shows that more expert training would be required to leverage the extended data visualization facilities.
+
+The made extension may be considered marginally enough to quality for a journal publication as to the previous proceedings publications. As far as the extension goes, I would not object the paper being accepted to CGF in its present form. On the other hand, I would not argue strongly for it, given the somewhat limited nature of extensions and incremental novelty regarding the previous conference papers. If accepted, the authors need to cite and delineate from the VMV and IEEE conference papers. The draft is missing this.
+
+[1] An interactive visualization system for urban search & rescue mission planning (2014 IEEE International Symposium on Safety, Security, and Rescue Robotics (SSRR))
+
+
+Additional Questions:
+Classification of the paper: Research paper (presents innovative reseach results)
+
+Does the paper address computer graphics?: Yes
+
+Originality/novelty: Average
+
+Importance: Average
+
+Technical soundness: Average
+
+Clarity of writing and presentation: Good
+
+Clarity and quality of illustrations (if present): Good
+
+Should the paper be shortened?
+If you recommend shortening the paper, please indicate in the 'Comments for Authors' section where the paper should be
+shortened, or mark-up and return the paper.: No
+
+Overall judgement: Average

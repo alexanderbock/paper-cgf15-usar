@@ -1,0 +1,27 @@
+Dear editor,
+
+we would like all the reviewers for their thorough contributions for improving this paper thorugh the review cycles. We hope that we succeeded in addressing the reviewer's concerns sufficiently in this revision. In the remainder of this revision report, we address the comments made by the reviewers along with our changes or rebuttals. The comments are sorted in the same order as they appeared in the review:
+
+"However, the titles of the VMV paper and the CGF submission are identical. So,I would suggest changing the title of the new submission"
+We agree with the reviewers comment that an identical title is detrimental and we changed the title from "Supporting Urban Search & Rescue Mission Planning through Visualization-Based Analysis" to "A Visualization-Based Analysis System for Urban Search & Rescue Mission Planning Support" with the desire to keep the title of the CGF invited paper similar, but distinct, from the original VMV submission.
+
+"Why not computing automatically which path is the shortest one / the most or least dangerous path / etc. and showing this information directly to the user instead of letting the user derive this information herself from the visualization"
+We changed the last paragraph of the introduction to make it more clear that a trade-off between paths is necessary rather than looking at the extremes
+
+"It does not get clear to me why the voxel-based representation should be the best one for the rendering of the point cloud. The voxels generate artificial geometric structures (cubes) that are not present in the scene geometriy and that may distract the viewer. Please explain why other point clould rendering techniques (e.g. based on surfels or splatting) have not been used."
+We added to Section 5.5 to address this concern of the reviewer. The abstract rendering was not found to be an issue with the experts using the system, additionally reflects the data structure used for the path computation, and is also more visually robust towards outliers.
+
+"- Section 5.2: how are start and POI voxels defined? Manually or automatically by the robot?"
+We rewrote the part in Section 5.2 that explained this distinction to make it more clearer that Start points, points of interest, and hazard points can be defined both by the robot (if it has the sufficient technology) or manually by a human. Forbidden points can only be placed by a human operator.
+
+"- Section 5.3.1: The authors make a strong assumption for the subsampling of the cloud (i.e. if p and q result in the same path, all samples in between p and q also result in the same path. Explain why this is safe to assume. Has this been proven? What is the intuition behind this assumption?"
+- This assumption has, to the authors knowledge, not been proven, however it makes intuitive sense. If we look at only a 2-dimensional metric, for instance whether there is a hazard in an area or not and the minimal distance, and take a circular hazard and the point-of-interest and the starting point on either side of the hazard.
+For a fixed value of the distance weight, we can find a hazard weight X for which all the paths with weight <X are passing right through the center of the hazard. As soon as the penalty for going around the circle is too high the direct path will be taken. And if we consider the weight Y < X, it will also lead through the hazard. It is trivial to see that all weights between any Y will lead to the same path as X.
+The same holds true for the opposite case. If the penalty for passing through the hazard is too high, it does not matter *how* high the penalty is, and all computations will result in the same path.
+While it is true that can be synthetic cases for which this assumption is false, we did not find these in our testing of the adaptive sampling techniques against the straight-forward regular sampling. In addition, the sampling algorithm in our system is deliberately left modular so that future research on a better-suited sampling algorithm can be easily integrated.
+
+"If accepted, the authors need to cite and delineate from the VMV and IEEE conference papers. The draft is missing this."
+- We have added the citations to the previous VMV and SSRR works into the draft, specifying the differences between this work and the previous publications.
+
+With kind regards,
+The Authors
